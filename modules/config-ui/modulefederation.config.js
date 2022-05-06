@@ -4,6 +4,7 @@ module.exports = {
   name: "configui",
   exposes: {
     "./App": "./src/App",
+    "./ConfigEditorPage": "./src/pages/config-view/ConfigEditorPage"
   },
   remotes: {},
   filename: "moduleEntry.js",

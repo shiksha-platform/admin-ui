@@ -5,7 +5,9 @@ module.exports = {
   exposes: {
     "./App": "./src/App",
   },
-  remotes: {},
+  remotes: {
+    configui: `configui@[window.appModules.configui.url]/moduleEntry.js`,
+  },
   filename: "moduleEntry.js",
   shared: {
     ...dependencies,

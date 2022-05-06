@@ -1,7 +1,7 @@
-import React from 'react';
-
+import React from "react"
 import { Button } from '../button/Button';
-import './header.css';
+import style from './header.module.css';
+import { Fragment } from 'react';
 
 type User = {
   name: string;
@@ -11,12 +11,11 @@ export interface HeaderProps {
   user?: User;
   onLogin: () => void;
   onLogout: () => void;
-  onCreateAccount: () => void;
 }
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
+export const Header = ({ user, onLogin, onLogout }: HeaderProps) => (
   <header>
-    <div className="wrapper">
+    <div className={style.wrapper}>
       <div>
         <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <g fill="none" fillRule="evenodd">
@@ -34,21 +33,20 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
             />
           </g>
         </svg>
-        <h1>Acme</h1>
+        <h1>Shiksha</h1>
       </div>
       <div>
         {user ? (
-          <>
-            <span className="welcome">
+          <Fragment>
+            <span className={style.welcome}>
               Welcome, <b>{user.name}</b>!
             </span>
             <Button size="small" onClick={onLogout} label="Log out" />
-          </>
+          </Fragment>
         ) : (
-          <>
+          <Fragment>
             <Button size="small" onClick={onLogin} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-          </>
+          </Fragment>
         )}
       </div>
     </div>

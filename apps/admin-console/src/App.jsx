@@ -2,14 +2,13 @@ import "./App.css";
 
 import 'common-ui/dist/index.css';
 
-import {AppShell, Header} from 'common-ui';
+import {AppShell} from 'common-ui';
 import React from "react";
-import ConfigEditorPage  from "./pages/config-view/ConfigEditorPage";
 
-type User = {
-  name: string;
-};
 
+const HomePage = () => <h1>Home Page</h1>;
+const ConfigPage = React.lazy(() => import('configui/ConfigEditorPage'));
+const RegistryPage = () => <h1>Registry Page</h1>;
 const AboutPage = () => <h1>About Page</h1>;
 
 function App() {
@@ -17,12 +16,17 @@ function App() {
     {
       path: "/",
       label:"Home",
-      component: ConfigEditorPage,
+      component: HomePage,
+    },
+    {
+      path: "/registry",
+      label:"Registry",
+      component: RegistryPage,
     },
     {
       path: "/config",
       label:"Modules",
-      component: ConfigEditorPage,
+      component: ConfigPage,
     },
     {
       path: "about",
@@ -31,7 +35,7 @@ function App() {
     }
   ];
   const appShellProp = {
-    label:"Config UI Shell",
+    label:"Admin Console",
     routes:routes
   }
   return (
@@ -40,6 +44,6 @@ function App() {
     </article>
 
   );
-} 
+}
 
 export default App;
