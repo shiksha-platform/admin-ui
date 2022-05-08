@@ -34,4 +34,7 @@ jobs:
   #    run: yarn test
 
     - name: Build
-      run: yarn build
+      run: |
+        yarn workspace common-ui build
+        yarn install
+        yarn build
