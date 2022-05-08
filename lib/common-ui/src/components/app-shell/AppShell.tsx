@@ -1,5 +1,10 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes, NavLink} from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  NavLink
+} from 'react-router-dom'
 import { Fragment } from 'react'
 import { Header } from '../header/Header'
 import { Suspense } from 'react'
@@ -21,7 +26,7 @@ type User = {
  */
 export const AppShell = ({ label, routes = [] }: AppShellProps) => {
   const [user, setUser] = React.useState<User>()
-  
+
   return (
     <Fragment>
       <Header
@@ -30,32 +35,34 @@ export const AppShell = ({ label, routes = [] }: AppShellProps) => {
         onLogout={() => setUser(undefined)}
       />
 
-<Suspense fallback="loading...">
-      <Router>
-        {/* Router component can have only 1 child. We'll use a simple
+      <Suspense fallback='loading...'>
+        <Router>
+          {/* Router component can have only 1 child. We'll use a simple
           div element for this example. */}
-        <div style={{display:'flex', flexDirection:'row'}}>
-          <div>
-            <ul  style={{listStyle:'none'}}>
-              {routes.map((item: any, index: number) => (
-                <li key={index}>
-                  <NavLink to={item.path}>{item.label}</NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div>
+              <ul style={{ listStyle: 'none' }}>
+                {routes.map((item: any, index: number) => (
+                  <li key={index}>
+                    <NavLink to={item.path}>{item.label}</NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <Routes>
-            {routes.map((item: any, index: number) => (
-              <Route
-                key={index}
-                path={item.path}
-                element={<item.component />}
-              />
-            ))}
-          </Routes>
-        </div>
-      </Router>
+            <div style={{ padding: '8px' }}>
+              <Routes>
+                {routes.map((item: any, index: number) => (
+                  <Route
+                    key={index}
+                    path={item.path}
+                    element={<item.component />}
+                  />
+                ))}
+              </Routes>
+            </div>
+          </div>
+        </Router>
       </Suspense>
     </Fragment>
   )
