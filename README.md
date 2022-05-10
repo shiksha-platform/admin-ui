@@ -2,21 +2,22 @@
 
 ## Modules
 
-| Module    | Description                                 |
-| ------------- | ------------------------------------------- |
+| Module    | Description                 |
+| --------- | --------------------------- |
 | config-ui | UI to configure application |
 
 ## Apps
 
-| App    | Description                                 |
+| App           | Description                                 |
 | ------------- | ------------------------------------------- |
 | admin-console | Host Application for shiksha platform admin |
 
 ## Library
 
-| Module    | Description                                 |
-| ------------- | ------------------------------------------- |
+| Module    | Description                                  |
+| --------- | -------------------------------------------- |
 | common-ui | Shared Library for UI componets and services |
+
 ## Create New Module
 
 - copy module-template to packages/[module-name]
