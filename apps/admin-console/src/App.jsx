@@ -11,7 +11,7 @@ const RegistryPage = () => <h1>Registry Page</h1>;
 const AboutPage = () => <h1>About Page</h1>;
 
 initializeI18n(
-  ["translation","configui"],
+  ["translation", "configui"],
   `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
   window.appModules
 );

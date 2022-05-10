@@ -26,16 +26,14 @@ const languageDetector: any = {
 const initializeI18n = (
   namespaces: string[],
   basePath = '/locales/{{lng}}/{{ns}}.json',
-  modules=[],
+  modules = []
 ) => {
-  let httpOptions = _.keys(modules).map(
-    (k) => {
-        return {loadPath:`${modules[k].url}/locales/{{lng}}/{{ns}}.json`}
-      }
-    );
-    httpOptions.unshift({loadPath:basePath});
-  let backends =  httpOptions.map(item=>HttpBackend);
-  console.log(httpOptions);
+  let httpOptions = _.keys(modules).map((k) => {
+    return { loadPath: `${modules[k].url}/locales/{{lng}}/{{ns}}.json` }
+  })
+  httpOptions.unshift({ loadPath: basePath })
+  let backends = httpOptions.map((item) => HttpBackend)
+  console.log(httpOptions)
   //  console.log(`${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`)
   i18n
     // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -49,21 +47,19 @@ const initializeI18n = (
     .use(initReactI18next)
     // init i18next
     // for all options read: https://www.i18next.com/overview/configuration-options
-    .init(
-      {
-        backend:{
-          backends:backends,
-          backendOptions:httpOptions
-        },
-        fallbackLng: 'en',
-        debug: false,
-        ns: namespaces,
-        fallbackNS: 'translation',
-        interpolation: {
-          escapeValue: false // not needed for react as it escapes by default
-        }
+    .init({
+      backend: {
+        backends: backends,
+        backendOptions: httpOptions
+      },
+      fallbackLng: 'en',
+      debug: false,
+      ns: namespaces,
+      fallbackNS: 'translation',
+      interpolation: {
+        escapeValue: false // not needed for react as it escapes by default
       }
-    )
+    })
 }
 
 export default initializeI18n

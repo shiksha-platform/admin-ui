@@ -13,14 +13,9 @@ type User = {
 
 const AboutPage = () => <h1>About Page</h1>;
 
-
-initializeI18n(
-  [],
-  `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`
-);
+initializeI18n([], `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`);
 
 function App() {
-
   const routes = [
     {
       path: "/",
