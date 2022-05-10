@@ -1,8 +1,8 @@
 import "./App.css";
 
 import "common-ui/dist/index.css";
-
-import { AppShell } from "common-ui";
+import { useTranslation } from "react-i18next";
+import { AppShell, initializeI18n } from "common-ui";
 import React from "react";
 
 const HomePage = () => <h1>Home Page</h1>;
@@ -10,6 +10,11 @@ const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
 const RegistryPage = () => <h1>Registry Page</h1>;
 const AboutPage = () => <h1>About Page</h1>;
 
+initializeI18n(
+  ["translation","configui"],
+  `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
+  window.appModules
+);
 function App() {
   const routes = [
     {

@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const ConfigEditorPage = () => {
-  return <>Config Editor Page here...</>;
+  const { t }  =  useTranslation("configui");
+  return <>{t("PAGE_TITLE")}</>;
 };
 export default ConfigEditorPage as React.FC;

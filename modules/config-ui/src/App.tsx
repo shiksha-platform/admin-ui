@@ -2,9 +2,10 @@ import "./App.css";
 
 import "common-ui/dist/index.css";
 
-import { AppShell, Header } from "common-ui";
+import { AppShell, initializeI18n } from "common-ui";
 import React from "react";
 import ConfigEditorPage from "./pages/config-view/ConfigEditorPage";
+import { useTranslation } from "react-i18next";
 
 type User = {
   name: string;
@@ -12,7 +13,14 @@ type User = {
 
 const AboutPage = () => <h1>About Page</h1>;
 
+
+initializeI18n(
+  [],
+  `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`
+);
+
 function App() {
+
   const routes = [
     {
       path: "/",
@@ -31,7 +39,7 @@ function App() {
     },
   ];
   const appShellProp = {
-    label: "Config UI Shell",
+    label: "",
     routes: routes,
   };
   return (
