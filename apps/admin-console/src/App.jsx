@@ -1,9 +1,10 @@
 import "./App.css";
 
 import "common-ui/dist/index.css";
-import { useTranslation } from "react-i18next";
 import { AppShell, initializeI18n } from "common-ui";
 import React from "react";
+import { FaBook, FaHome, FaCogs } from "react-icons/fa";
+import { BiBarChartSquare } from "react-icons/bi";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
@@ -20,21 +21,49 @@ function App() {
     {
       path: "/",
       label: "Home",
+      icon: FaHome,
       component: HomePage,
     },
     {
       path: "/registry",
       label: "Registry",
+      icon: FaBook,
       component: RegistryPage,
+      children: [
+        {
+          path: "/config",
+          label: "Schools",
+          component: RegistryPage,
+        },
+        {
+          path: "/config",
+          label: "Students",
+          component: RegistryPage,
+        },
+      ],
     },
     {
       path: "/config",
       label: "Modules",
       component: ConfigPage,
+      icon: FaCogs,
+      children: [
+        {
+          path: "/config",
+          label: "Attendance",
+          component: ConfigPage,
+        },
+        {
+          path: "/config",
+          label: "Classes & Groups",
+          component: ConfigPage,
+        },
+      ],
     },
     {
-      path: "about",
-      label: "About",
+      path: "reports",
+      label: "Reports",
+      icon: BiBarChartSquare,
       component: AboutPage,
     },
   ];
