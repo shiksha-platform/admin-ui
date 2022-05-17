@@ -27,7 +27,7 @@ export const AppShell = ({ label, routes = [] }: AppShellProps) => {
     colors: {
       primary: {
         100: '#F87558',
-        900: '#F875ff'
+        900: '#F9EFEC'
       }
     }
   })
