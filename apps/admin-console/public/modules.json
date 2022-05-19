@@ -1,0 +1,5 @@
+{
+  "configui": {
+    "url": "http://localhost:3002/modules/config-ui"
+  }
+}
