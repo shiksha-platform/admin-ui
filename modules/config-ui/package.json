@@ -4,9 +4,12 @@
   "private": true,
   "homepage": "modules/config-ui",
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@rjsf/chakra-ui": "^4.2.0",
+    "@rjsf/core": "^4.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
