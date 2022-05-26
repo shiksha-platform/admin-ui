@@ -109,19 +109,25 @@ const ConfigEditorPage = () => {
       console.log(f.validate(f.state.formData));
       f.submit();
     });
-    
   };
   const onSubmit = (formData: any) => console.log("Data submitted: ", formData);
 
   return (
     <Box marginX={4}>
-      <Flex direction={'row'}>
+      <Flex direction={"row"}>
         <Heading as="h4" size="md">
           {config.label} <Icon as={FaInfoCircle} />
         </Heading>
         <Spacer></Spacer>
         <Box>
-          <Button  variant={'outline'} borderColor={'primary.100'} color={'primary.100'} onClick={submitForm}>Save</Button>
+          <Button
+            variant={"outline"}
+            borderColor={"primary.100"}
+            color={"primary.100"}
+            onClick={submitForm}
+          >
+            Save
+          </Button>
         </Box>
       </Flex>
       <Box marginY={4} p={0}>
