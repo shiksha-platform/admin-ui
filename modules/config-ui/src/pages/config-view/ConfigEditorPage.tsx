@@ -2,9 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@chakra-ui/button";
 import {
   Box,
+  Flex,
   Heading,
   Icon,
   Link,
+  Spacer,
   Switch,
   Tab,
   TabList,
@@ -14,10 +16,12 @@ import {
 } from "@chakra-ui/react";
 
 import { FaInfoCircle } from "react-icons/fa";
+import { Form } from "@rjsf/chakra-ui";
 
-import Form from "@rjsf/chakra-ui";
+import { useParams } from "react-router-dom";
+
 import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const ObjectFieldTemplate = (props: any) => {
   return (
@@ -84,17 +88,42 @@ interface SectionConfig {
 }
 
 const ConfigEditorPage = () => {
+  const { moduleId } = useParams();
+
+  //TODO: load the config schema fromendpoiint forr the moduleId
+  console.log(moduleId);
   const config: any = attendanceConfigSchema;
 
-  const [selectedModule, setSelectedModule] = useState<SubModuleConfig>(
+  const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
   );
+
   const { t } = useTranslation("configui");
+
+  let configForms: any[] = [];
+  const submitForm = () => {
+    console.log(configForms);
+    //configForms[0].submit();
+    //console.log(configForms[0].state.formData);
+    configForms.forEach((f) => {
+      console.log(f.validate(f.state.formData));
+      f.submit();
+    });
+    
+  };
+  const onSubmit = (formData: any) => console.log("Data submitted: ", formData);
+
   return (
     <Box marginX={4}>
-      <Heading as="h4" size="md">
-        {config.label} <Icon as={FaInfoCircle} />
-      </Heading>
+      <Flex direction={'row'}>
+        <Heading as="h4" size="md">
+          {config.label} <Icon as={FaInfoCircle} />
+        </Heading>
+        <Spacer></Spacer>
+        <Box>
+          <Button  variant={'outline'} borderColor={'primary.100'} color={'primary.100'} onClick={submitForm}>Save</Button>
+        </Box>
+      </Flex>
       <Box marginY={4} p={0}>
         {config["subModules"].map((m: SubModuleConfig, index: number) => {
           return (
@@ -106,7 +135,7 @@ const ConfigEditorPage = () => {
             >
               <Link
                 onClick={() => {
-                  setSelectedModule(m);
+                  setSelectedSubModule(m);
                 }}
               >
                 {m.label}
@@ -118,7 +147,7 @@ const ConfigEditorPage = () => {
       <Box>
         <Tabs>
           <TabList>
-            {selectedModule.sections.map(
+            {selectedSubModule.sections.map(
               (section: SectionConfig, index: number) => {
                 return <Tab key={index}>{section.label}</Tab>;
               }
@@ -126,16 +155,24 @@ const ConfigEditorPage = () => {
           </TabList>
 
           <TabPanels>
-            {selectedModule.sections.map(
+            {selectedSubModule.sections.map(
               (section: SectionConfig, index: number) => {
                 return (
                   <TabPanel key={index}>
                     <Form
+                      id="cForm"
+                      // @ts-ignore
+                      ref={(form) => {
+                        configForms.push(form);
+                      }}
+                      onSubmit={onSubmit}
                       schema={section.schema}
                       uiSchema={section.uischema}
                       ObjectFieldTemplate={ObjectFieldTemplate}
                       FieldTemplate={CustomFieldTemplate}
-                    />
+                    >
+                      <></>
+                    </Form>
                   </TabPanel>
                 );
               }
