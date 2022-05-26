@@ -20,43 +20,55 @@ function App() {
   const routes = [
     {
       path: "/",
+      component: HomePage,
+    },
+    {
+      path: "/registry",
+      component: RegistryPage,
+    },
+    {
+      path: "/config/:module",
+      component: ConfigPage,
+    },
+    {
+      path: "reports",
+      component: AboutPage,
+    },
+  ];
+
+  const navLinks = [
+    {
+      path: "/",
       label: "Home",
       icon: FaHome,
-      component: HomePage,
     },
     {
       path: "/registry",
       label: "Registry",
       icon: FaBook,
-      component: RegistryPage,
       children: [
         {
-          path: "/config",
+          path: "/registry/schools",
           label: "Schools",
-          component: RegistryPage,
         },
         {
-          path: "/config",
+          path: "/registry/students",
           label: "Students",
-          component: RegistryPage,
         },
       ],
     },
     {
-      path: "/config",
+      path: "/config/attendance",
       label: "Modules",
-      component: ConfigPage,
       icon: FaCogs,
       children: [
         {
-          path: "/config",
+          path: "/config/attendance",
           label: "Attendance",
-          component: ConfigPage,
         },
         {
-          path: "/config",
+          path: "/config/classes",
           label: "Classes & Groups",
-          component: ConfigPage,
         },
       ],
     },
@@ -70,10 +82,11 @@ function App() {
   const appShellProp = {
     label: "Admin Console",
     routes: routes,
+    navLinks: navLinks,
   };
   return (
     <article>
-      <AppShell {...appShellProp}></AppShell>
+      <AppShell label="" routes={routes} navLinks={navLinks}></AppShell>
     </article>
   );
 }
