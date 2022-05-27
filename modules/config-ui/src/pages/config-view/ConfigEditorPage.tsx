@@ -178,8 +178,16 @@ const ConfigEditorPage = () => {
                       FieldTemplate={CustomFieldTemplate}
                     >
                       <Box my={4}>
-                        <Button variant={'outline'} color={'primary.100'} type="submit">Save</Button>
-                        <Button variant={'outline'} type="button">Cancel</Button>
+                        <Button
+                          variant={"outline"}
+                          color={"primary.100"}
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                        <Button variant={"outline"} type="button">
+                          Cancel
+                        </Button>
                       </Box>
                     </Form>
                   </TabPanel>

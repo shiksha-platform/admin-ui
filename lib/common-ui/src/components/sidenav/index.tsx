@@ -69,7 +69,6 @@ const NavMenuList = ({
   )
 }
 export const SideNav = ({ routes, navLinks }: any) => {
-  
   return (
     <Fragment>
       <Suspense fallback='loading...'>
@@ -88,7 +87,7 @@ export const SideNav = ({ routes, navLinks }: any) => {
 
             <div style={{ padding: '8px' }}>
               <Routes>
-              {routes.map((item: any, index: number) => {
+                {routes.map((item: any, index: number) => {
                   return (
                     <Route
                       key={index}
@@ -97,7 +96,6 @@ export const SideNav = ({ routes, navLinks }: any) => {
                     />
                   )
                 })}
-          
               </Routes>
             </div>
           </Flex>
@@ -106,16 +104,3 @@ export const SideNav = ({ routes, navLinks }: any) => {
     </Fragment>
   )
 }
-
-/*
-{routes.map((item: any, index: number) => {
-                  console.log(item)
-                  return (
-                    <Route
-                      key={index}
-                      path={item.path}
-                      element={<item.component />}
-                    />
-                  )
-                })}
-*/
