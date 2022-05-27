@@ -177,7 +177,10 @@ const ConfigEditorPage = () => {
                       ObjectFieldTemplate={ObjectFieldTemplate}
                       FieldTemplate={CustomFieldTemplate}
                     >
-                      <></>
+                      <Box my={4}>
+                        <Button variant={'outline'} color={'primary.100'} type="submit">Save</Button>
+                        <Button variant={'outline'} type="button">Cancel</Button>
+                      </Box>
                     </Form>
                   </TabPanel>
                 );

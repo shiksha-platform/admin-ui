@@ -27,7 +27,7 @@ function App() {
       component: RegistryPage,
     },
     {
-      path: "/config/:module",
+      path: "/config/:moduleId",
       component: ConfigPage,
     },
     {
@@ -76,7 +76,6 @@ function App() {
       path: "reports",
       label: "Reports",
       icon: BiBarChartSquare,
-      component: AboutPage,
     },
   ];
   const appShellProp = {

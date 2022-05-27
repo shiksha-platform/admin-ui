@@ -65,15 +65,11 @@ const NavMenuList = ({
       {navLinks.map((item: NavMenuItemProps, index: number) => (
         <NavMenuItem key={index} {...item}></NavMenuItem>
       ))}
-      <li style={{ margin: '8px' }}>
-        <Flex direction={'row'}>
-          <NavLink to={'/config1/abc'}>Test</NavLink>
-        </Flex>
-      </li>
     </ul>
   )
 }
 export const SideNav = ({ routes, navLinks }: any) => {
+  
   return (
     <Fragment>
       <Suspense fallback='loading...'>
@@ -92,7 +88,27 @@ export const SideNav = ({ routes, navLinks }: any) => {
 
             <div style={{ padding: '8px' }}>
               <Routes>
-                {routes.map((item: any, index: number) => {
+              {routes.map((item: any, index: number) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={item.path}
+                      element={<item.component />}
+                    />
+                  )
+                })}
+          
+              </Routes>
+            </div>
+          </Flex>
+        </Router>
+      </Suspense>
+    </Fragment>
+  )
+}
+
+/*
+{routes.map((item: any, index: number) => {
                   console.log(item)
                   return (
                     <Route
@@ -102,11 +118,4 @@ export const SideNav = ({ routes, navLinks }: any) => {
                     />
                   )
                 })}
-              </Routes>
-            </div>
-          </Flex>
-        </Router>
-      </Suspense>
-    </Fragment>
-  )
-}
+*/
