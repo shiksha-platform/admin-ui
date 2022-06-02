@@ -15,7 +15,7 @@ export interface AppShellProps {
   AuthComponent: any
 }
 type User = {
-  name: string
+  name: string | null
 }
 /**
  * Primary UI component for user interaction
@@ -33,7 +33,10 @@ export const AppShell = ({
   navLinks,
   AuthComponent
 }: AppShellProps) => {
-  const [user, setUser] = React.useState<User>()
+  const userName = localStorage.getItem('user_name')
+    ? localStorage.getItem('user_name')
+    : ''
+  const [user, setUser] = React.useState<User>({ name: userName })
   const [token, setToken] = useState(localStorage.getItem('token'))
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export const AppShell = ({
   }, [token])
 
   const handleLogout = () => {
-    setUser(undefined)
+    setUser({ name: '' })
     setToken('')
     localStorage.removeItem('token')
     localStorage.removeItem('user_info')

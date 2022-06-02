@@ -97,6 +97,10 @@ export const LoginPage = () => {
             'user_info',
             JSON.stringify(userInfoResponse.data)
           )
+          localStorage.setItem(
+            'user_name',
+            JSON.stringify(userInfoResponse.data['giiven_name'])
+          )
           localStorage.setItem('token', token)
           eventBus.publish('AUTH', {
             eventType: 'LOGIN_SUCCESS',

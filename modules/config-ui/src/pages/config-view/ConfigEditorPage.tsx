@@ -101,16 +101,9 @@ const ConfigEditorPage = () => {
   const { t } = useTranslation("configui");
 
   let configForms: any[] = [];
-  const submitForm = () => {
-    console.log(configForms);
-    //configForms[0].submit();
-    //console.log(configForms[0].state.formData);
-    configForms.forEach((f) => {
-      console.log(f.validate(f.state.formData));
-      f.submit();
-    });
+  const onSubmit = (formData: any) => {
+    console.log("Data submitted: ", formData);
   };
-  const onSubmit = (formData: any) => console.log("Data submitted: ", formData);
 
   return (
     <Box marginX={4}>
@@ -119,16 +112,6 @@ const ConfigEditorPage = () => {
           {config.label} <Icon as={FaInfoCircle} />
         </Heading>
         <Spacer></Spacer>
-        <Box>
-          <Button
-            variant={"outline"}
-            borderColor={"primary.100"}
-            color={"primary.100"}
-            onClick={submitForm}
-          >
-            Save
-          </Button>
-        </Box>
       </Flex>
       <Box marginY={4} p={0}>
         {config["subModules"].map((m: SubModuleConfig, index: number) => {
