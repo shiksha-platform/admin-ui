@@ -1,10 +1,11 @@
 import "./App.css";
 
 import "common-ui/dist/index.css";
-import { AppShell, initializeI18n } from "common-ui";
+import { AppShell, initializeI18n, LoginPage } from "common-ui";
 import React from "react";
 import { FaBook, FaHome, FaCogs } from "react-icons/fa";
 import { BiBarChartSquare } from "react-icons/bi";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
@@ -78,16 +79,22 @@ function App() {
       icon: BiBarChartSquare,
     },
   ];
-  const appShellProp = {
-    label: "Admin Console",
-    routes: routes,
-    navLinks: navLinks,
-  };
   return (
     <article>
-      <AppShell label="" routes={routes} navLinks={navLinks}></AppShell>
+      <AppShell
+        label=""
+        routes={routes}
+        navLinks={navLinks}
+        AuthComponent={LoginPage}
+      ></AppShell>
     </article>
   );
 }
 
 export default App;
+
+/*
+<article>
+      <AppShell label="" routes={routes} navLinks={navLinks}></AppShell>
+    </article>
+*/
