@@ -17,12 +17,12 @@ export const fetchConfigData = async (moduleId: any) => {
 };
 
 export const saveConfigData = async (configData: any) => {
-  let configs  = Object.keys(configData).map(key=>{
+  let configs = Object.keys(configData).map((key) => {
     let postData = {
-      "module": "attendance",
-      "key": key,
-      "value": configData[key],
-    }
+      module: "attendance",
+      key: key,
+      value: configData[key],
+    };
     return axios
       .post(saveConfigApiUrl, postData, {
         headers: {
@@ -31,7 +31,7 @@ export const saveConfigData = async (configData: any) => {
       })
       .then((res) => {
         return res.data;
-      })
-  })
+      });
+  });
   return await Promise.all(configs);
 };

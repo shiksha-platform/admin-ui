@@ -15,17 +15,21 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 
-
 import { FaInfoCircle } from "react-icons/fa";
 import { Form } from "@rjsf/chakra-ui";
 
 import { useParams } from "react-router-dom";
 
-import  * as  _ from 'lodash';
+import * as _ from "lodash";
 
 import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
 import React, { useState } from "react";
-import { QueryClient, QueryClientProvider, useMutation, useQuery } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+  useQuery,
+} from "react-query";
 import { fetchConfigData, saveConfigData } from "../../services/ConfigService";
 
 const ObjectFieldTemplate = (props: any) => {
@@ -111,94 +115,95 @@ const ConfigEditor = ({ moduleId }: any) => {
     ["configData", { moduleId }],
     (moduleId) => {
       return fetchConfigData(moduleId);
-      //TODO: tansform response into json object hierarchy for json form 
+      //TODO: tansform response into json object hierarchy for json form
       //setFormData(data)
     },
     { retry: false }
   );
 
-
-  const mutation = useMutation(configData => {
-    console.log(configData);
-    return saveConfigData(configData)
-    //return Promise.resolve(configData);
-  }, {
-    onSuccess: (data,  variable,  context)=>{
-      console.log(data)
-      //TODO: prompt success and rerender form
+  const mutation = useMutation(
+    (configData) => {
+      console.log(configData);
+      return saveConfigData(configData);
+      //return Promise.resolve(configData);
     },
-    onError:(error)=>{
-      console.log(error);
-      //TODO: prompt error
+    {
+      onSuccess: (data, variable, context) => {
+        console.log(data);
+        //TODO: prompt success and rerender form
+      },
+      onError: (error) => {
+        console.log(error);
+        //TODO: prompt error
+      },
     }
-  })
+  );
 
   const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
   );
 
-  // TODO: remove default values from here and move to on query response 
-  const [formData,  setFormData] = useState({
-    "attendance":  {
-        "default_attendance_states": ["present","absent"]
+  // TODO: remove default values from here and move to on query response
+  const [formData, setFormData] = useState({
+    attendance: {
+      default_attendance_states: ["present", "absent"],
     },
-    "attendance_card":{
-      "order_of_attendance_card": "roll_number"
-    }
-  })
+    attendance_card: {
+      order_of_attendance_card: "roll_number",
+    },
+  });
 
   const { t } = useTranslation("configui");
 
   //TODO: move this to utils
-  const flatten = (obj:any, prefix:string[] = [], current:any = {}) => {
-    if (typeof(obj) === 'object' && obj !== null) {
+  const flatten = (obj: any, prefix: string[] = [], current: any = {}) => {
+    if (typeof obj === "object" && obj !== null) {
       for (const key of Object.keys(obj)) {
-        if(Array.isArray(obj[key])){
-          prefix=prefix.concat(key);
-          current[prefix.join('.')] = obj[key]
-        }  else {
-          flatten(obj[key], prefix.concat(key), current)
+        if (Array.isArray(obj[key])) {
+          prefix = prefix.concat(key);
+          current[prefix.join(".")] = obj[key];
+        } else {
+          flatten(obj[key], prefix.concat(key), current);
         }
       }
     } else {
-      current[prefix.join('.')] = obj
+      current[prefix.join(".")] = obj;
     }
-    return current
-  }
+    return current;
+  };
 
   //TODO: move this to utils
-  const unflatten = (mapData:any)=> {
-    let  result = {};
-    let lookupTbl =  {};
+  const unflatten = (mapData: any) => {
+    let result = {};
+    let lookupTbl = {};
     for (const key of Object.keys(mapData)) {
       const value = mapData[key];
-      let prefixes =key.split(".");
+      let prefixes = key.split(".");
       prefixes = prefixes.reverse();
-      let obj:any ;
-      for(const p of prefixes){
-        if(obj === undefined){
+      let obj: any;
+      for (const p of prefixes) {
+        if (obj === undefined) {
           obj = {};
-          obj[p]=value;
+          obj[p] = value;
         } else {
-          let newObj:any = {};
-          newObj[p]=obj;
-          obj  = newObj;
+          let newObj: any = {};
+          newObj[p] = obj;
+          obj = newObj;
         }
       }
-      result = _.merge(result, obj)
+      result = _.merge(result, obj);
     }
     return result;
-  } 
+  };
 
   let configForms: any[] = [];
   const onSubmit = (form: any) => {
     console.log("Data submitted: ", form);
     let formDataObject = form.formData;
-    let flatData = flatten(formDataObject)
-    mutation.mutate(flatData); 
+    let flatData = flatten(formDataObject);
+    mutation.mutate(flatData);
     return true;
   };
-
 
   return (
     <Box marginX={4}>
