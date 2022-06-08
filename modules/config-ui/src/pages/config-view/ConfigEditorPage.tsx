@@ -15,13 +15,18 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 
+
 import { FaInfoCircle } from "react-icons/fa";
 import { Form } from "@rjsf/chakra-ui";
 
 import { useParams } from "react-router-dom";
 
+import  * as  _ from 'lodash';
+
 import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
 import React, { useState } from "react";
+import { QueryClient, QueryClientProvider, useMutation, useQuery } from "react-query";
+import { fetchConfigData, saveConfigData } from "../../services/ConfigService";
 
 const ObjectFieldTemplate = (props: any) => {
   return (
@@ -89,21 +94,111 @@ interface SectionConfig {
 
 const ConfigEditorPage = () => {
   const { moduleId } = useParams();
+  const queryClient = new QueryClient();
 
-  //TODO: load the config schema fromendpoiint forr the moduleId
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ConfigEditor moduleId={moduleId}></ConfigEditor>
+    </QueryClientProvider>
+  );
+};
+const ConfigEditor = ({ moduleId }: any) => {
+  //TODO: load the config schema fromendpoiint for the moduleId
   console.log(moduleId);
   const config: any = attendanceConfigSchema;
+
+  const { isLoading, error, data } = useQuery(
+    ["configData", { moduleId }],
+    (moduleId) => {
+      return fetchConfigData(moduleId);
+      //TODO: tansform response into json object hierarchy for json form 
+      //setFormData(data)
+    },
+    { retry: false }
+  );
+
+
+  const mutation = useMutation(configData => {
+    console.log(configData);
+    return saveConfigData(configData)
+    //return Promise.resolve(configData);
+  }, {
+    onSuccess: (data,  variable,  context)=>{
+      console.log(data)
+      //TODO: prompt success and rerender form
+    },
+    onError:(error)=>{
+      console.log(error);
+      //TODO: prompt error
+    }
+  })
 
   const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
   );
 
+  // TODO: remove default values from here and move to on query response 
+  const [formData,  setFormData] = useState({
+    "attendance":  {
+        "default_attendance_states": ["present","absent"]
+    },
+    "attendance_card":{
+      "order_of_attendance_card": "roll_number"
+    }
+  })
+
   const { t } = useTranslation("configui");
 
+  //TODO: move this to utils
+  const flatten = (obj:any, prefix:string[] = [], current:any = {}) => {
+    if (typeof(obj) === 'object' && obj !== null) {
+      for (const key of Object.keys(obj)) {
+        if(Array.isArray(obj[key])){
+          prefix=prefix.concat(key);
+          current[prefix.join('.')] = obj[key]
+        }  else {
+          flatten(obj[key], prefix.concat(key), current)
+        }
+      }
+    } else {
+      current[prefix.join('.')] = obj
+    }
+    return current
+  }
+
+  //TODO: move this to utils
+  const unflatten = (mapData:any)=> {
+    let  result = {};
+    let lookupTbl =  {};
+    for (const key of Object.keys(mapData)) {
+      const value = mapData[key];
+      let prefixes =key.split(".");
+      prefixes = prefixes.reverse();
+      let obj:any ;
+      for(const p of prefixes){
+        if(obj === undefined){
+          obj = {};
+          obj[p]=value;
+        } else {
+          let newObj:any = {};
+          newObj[p]=obj;
+          obj  = newObj;
+        }
+      }
+      result = _.merge(result, obj)
+    }
+    return result;
+  } 
+
   let configForms: any[] = [];
-  const onSubmit = (formData: any) => {
-    console.log("Data submitted: ", formData);
+  const onSubmit = (form: any) => {
+    console.log("Data submitted: ", form);
+    let formDataObject = form.formData;
+    let flatData = flatten(formDataObject)
+    mutation.mutate(flatData); 
+    return true;
   };
+
 
   return (
     <Box marginX={4}>
@@ -113,6 +208,26 @@ const ConfigEditorPage = () => {
         </Heading>
         <Spacer></Spacer>
       </Flex>
+      {isLoading ? (
+        <Flex direction={"row"}>
+          <Heading as="h5" size="sm">
+            Loading...
+          </Heading>
+          <Spacer></Spacer>
+        </Flex>
+      ) : (
+        <></>
+      )}
+      {error ? (
+        <Flex direction={"row"}>
+          <Heading as="h5" size="sm">
+            {error instanceof Error ? error.message : "Error"}
+          </Heading>
+          <Spacer></Spacer>
+        </Flex>
+      ) : (
+        <></>
+      )}
       <Box marginY={4} p={0}>
         {config["subModules"].map((m: SubModuleConfig, index: number) => {
           return (
@@ -157,6 +272,7 @@ const ConfigEditorPage = () => {
                       onSubmit={onSubmit}
                       schema={section.schema}
                       uiSchema={section.uischema}
+                      formData={formData}
                       ObjectFieldTemplate={ObjectFieldTemplate}
                       FieldTemplate={CustomFieldTemplate}
                     >

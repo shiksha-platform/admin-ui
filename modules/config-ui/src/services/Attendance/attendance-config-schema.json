@@ -13,7 +13,7 @@
             "title": "",
             "type": "object",
             "properties": {
-              "Attendance": {
+              "attendance": {
                 "type": "object",
                 "title": "Attendance",
                 "properties": {
