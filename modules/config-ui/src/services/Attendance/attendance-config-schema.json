@@ -1,0 +1,226 @@
+{
+  "name": "attendance",
+  "label": "Attendance",
+  "subModules": [
+    {
+      "name": "student-attendance",
+      "label": "Student Attendance",
+      "sections": [
+        {
+          "name": "mark-attendance",
+          "label": "Mark Attendance",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "attendance": {
+                "type": "object",
+                "title": "Attendance",
+                "properties": {
+                  "default_attendance_states": {
+                    "title": "Available attendance states",
+                    "type": "array",
+                    "default": ["present", "absent", "unmarked"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["present", "absent", "unmarked"]
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "attendance_card": {
+                "type": "object",
+                "title": "Details Shown in Attendance Card",
+                "properties": {
+                  "visual_layout_attendance_card": {
+                    "title": "Attendance layout",
+                    "type": "string",
+                    "default": "default",
+                    "enum": ["default"],
+                    "enumNames": ["Default Layout"]
+                  },
+                  "order_of_attendance_card": {
+                    "title": "Sort Options",
+                    "type": "string",
+                    "default": "Alphabetically",
+                    "enum": ["Alphabetically", "roll_number"],
+                    "enumNames": ["Alphabetically", "According to roll numbert"]
+                  }
+                }
+              },
+              "class_attendance": {
+                "type": "object",
+                "title": "Class Attendance",
+                "properties": {
+                  "frequency_time_attendance": {
+                    "title": "Frequency",
+                    "type": "string",
+                    "default": "once_a_day",
+                    "enum": [
+                      "once_a_day",
+                      "twice_a_day",
+                      "thrice_a_day",
+                      "once_a_week"
+                    ],
+                    "enumNames": [
+                      "Once a day",
+                      "Twice a day",
+                      "Thrice a day",
+                      "Once a week"
+                    ]
+                  },
+                  "submit_by": {
+                    "title": "Submit by",
+                    "type": "array",
+                    "default": ["eod"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["eod", "9am", "12pm", "1pm", "2pm"],
+                      "enumNames": ["EOD", "9 AM", "12 PM", "1 PM", "2 PM"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "previous_attendance_edit": {
+                    "title": "Enabling if editing previous attendance is allowed",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "mark_all_attendance_at_once": {
+                    "title": "Enabling if marking all students at once is allowed",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "class_period_attendance": {
+                    "title": "Enabling class period attendance",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "date_till_previous_attendance_allow": {
+                    "type": "string",
+                    "title": "Configuring a limit till which previous attendance is visible",
+                    "default": "2022-04-01",
+                    "format": "date"
+                  },
+                  "no_of_day_display_on_attendance_screen": {
+                    "title": "Configuring no. of days for which previous attendance is visible on a single screen",
+                    "type": "number",
+                    "default": 7,
+                    "enum": [5, 6, 7]
+                  }
+                }
+              }
+            }
+          },
+          "uischema": {
+            "class_attendance": {
+              "previous_attendance_allowed": {
+                "ui:widget": "radio"
+              },
+              "allow_to_mark_all_attendance_at_once": {
+                "ui:widget": "radio"
+              }
+            }
+          }
+        },
+        {
+          "name": "report",
+          "label": "Reports",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "Attendance": {
+                "type": "object",
+                "title": "Reports",
+                "properties": {
+                  "report_types": {
+                    "title": "Report Types",
+                    "type": "array",
+                    "default": ["report1", "report2"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["Report 1", "Report 2"]
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            }
+          },
+          "uischema": {}
+        },
+        {
+          "name": "communication",
+          "label": "Communication",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "Attendance": {
+                "type": "object",
+                "title": "Communication",
+                "properties": {
+                  "channels_of_communication": {
+                    "title": "Communication Channel",
+                    "type": "array",
+                    "default": ["SMS", "Whatsapp"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["SMS", "Whatsapp"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "allowed_role_to_send_attendance_notification": {
+                    "title": "Permitting roles that can send notifications",
+                    "type": "array",
+                    "default": [
+                      "state_deployer",
+                      "state_admin",
+                      "school_admin",
+                      "teacher"
+                    ],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "state_deployer",
+                        "state_admin",
+                        "school_admin",
+                        "teacher"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "see_notification_history": {
+                    "title": "Enable / Disable visibility of notification history",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              }
+            }
+          },
+          "uischema": {}
+        }
+      ]
+    },
+    {
+      "name": "staff-attendance",
+      "label": "Staff Attendance",
+      "sections": [
+        {
+          "name": "mark-attendance",
+          "label": "Mark Attendance",
+          "schema": {},
+          "uischema": {}
+        },
+        {
+          "name": "report",
+          "label": "Reports",
+          "schema": {},
+          "uischema": {}
+        }
+      ]
+    }
+  ]
+}

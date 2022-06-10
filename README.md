@@ -117,6 +117,13 @@ const AppShell = React.lazy(() => import("core/AppShell"));
 </React.Suspense>
 ```
 
+# Adding New Module to Config-UI
+
+- add navigation menu link - `config/<moduleId>`
+- add config schema for `moduleId`to backend
+- config editor loads config schema and data for param value `moduleId`
+- on save - api invokes backkend api saves config data for given `moduleId`
+
 # Developer Documents
 
 https://shiksha-platform.github.io/docs/Developer/Frontend/

@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { Flex, Box } from '@chakra-ui/react'
 
 type User = {
-  name: string
+  name: string | null
 }
 
 export interface HeaderProps {

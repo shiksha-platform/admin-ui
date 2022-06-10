@@ -12,6 +12,12 @@ export interface NavMenuItemProps {
   icon?: any
   children?: NavMenuItemProps[]
 }
+
+export interface RouteProps {
+  path: string
+  component: any
+}
+
 const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
   const [isOpen, setOpen] = useState(false)
   const toggle = () => {
@@ -30,7 +36,7 @@ const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
         </Flex>
         {isOpen && (
           <Box px='2'>
-            <NavMenuList routes={children}></NavMenuList>
+            <NavMenuList navLinks={children}></NavMenuList>
           </Box>
         )}
       </li>
@@ -47,16 +53,22 @@ const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
       </li>
     )
 }
-const NavMenuList = ({ routes, level = 1 }: any) => {
+const NavMenuList = ({
+  navLinks,
+  level = 1
+}: {
+  navLinks: NavMenuItemProps[]
+  level?: number
+}) => {
   return (
     <ul style={{ listStyle: 'none', padding: '4px' }}>
-      {routes.map((item: any, index: number) => (
+      {navLinks.map((item: NavMenuItemProps, index: number) => (
         <NavMenuItem key={index} {...item}></NavMenuItem>
       ))}
     </ul>
   )
 }
-export const SideNav = ({ routes = [] }: any) => {
+export const SideNav = ({ routes, navLinks }: any) => {
   return (
     <Fragment>
       <Suspense fallback='loading...'>
@@ -65,7 +77,7 @@ export const SideNav = ({ routes = [] }: any) => {
           div element for this example. */}
           <Flex direction={'row'} bg={'white'}>
             <Box p={'8px'} width='180px'>
-              <NavMenuList routes={routes}></NavMenuList>
+              <NavMenuList navLinks={navLinks}></NavMenuList>
             </Box>
             <Divider
               orientation='vertical'
@@ -75,13 +87,15 @@ export const SideNav = ({ routes = [] }: any) => {
 
             <div style={{ padding: '8px' }}>
               <Routes>
-                {routes.map((item: any, index: number) => (
-                  <Route
-                    key={index}
-                    path={item.path}
-                    element={<item.component />}
-                  />
-                ))}
+                {routes.map((item: any, index: number) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={item.path}
+                      element={<item.component />}
+                    />
+                  )
+                })}
               </Routes>
             </div>
           </Flex>

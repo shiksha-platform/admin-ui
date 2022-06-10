@@ -2,7 +2,13 @@ import "./App.css";
 
 import "common-ui/dist/index.css";
 
-import { AppShell, initializeI18n } from "common-ui";
+import {
+  AppShell,
+  AppShellProps,
+  initializeI18n,
+  LoginPage,
+  NavMenuItemProps,
+} from "common-ui";
 import ExamplePage from "./pages/example/ExamplePage";
 
 type User = {
@@ -31,9 +37,12 @@ function App() {
       component: AboutPage,
     },
   ];
-  const appShellProp = {
+  let navLinks: NavMenuItemProps[] = [];
+  const appShellProp: AppShellProps = {
     label: "",
     routes: routes,
+    navLinks: navLinks,
+    AuthComponent: LoginPage,
   };
   return (
     <article>

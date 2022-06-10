@@ -1,10 +1,11 @@
 import "./App.css";
 
 import "common-ui/dist/index.css";
-import { AppShell, initializeI18n } from "common-ui";
+import { AppShell, initializeI18n, LoginPage } from "common-ui";
 import React from "react";
 import { FaBook, FaHome, FaCogs } from "react-icons/fa";
 import { BiBarChartSquare } from "react-icons/bi";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
@@ -20,43 +21,55 @@ function App() {
   const routes = [
     {
       path: "/",
+      component: HomePage,
+    },
+    {
+      path: "/registry",
+      component: RegistryPage,
+    },
+    {
+      path: "/config/:moduleId",
+      component: ConfigPage,
+    },
+    {
+      path: "reports",
+      component: AboutPage,
+    },
+  ];
+
+  const navLinks = [
+    {
+      path: "/",
       label: "Home",
       icon: FaHome,
-      component: HomePage,
     },
     {
       path: "/registry",
       label: "Registry",
       icon: FaBook,
-      component: RegistryPage,
       children: [
         {
-          path: "/config",
+          path: "/registry/schools",
           label: "Schools",
-          component: RegistryPage,
         },
         {
-          path: "/config",
+          path: "/registry/students",
           label: "Students",
-          component: RegistryPage,
         },
       ],
     },
     {
-      path: "/config",
+      path: "/config/attendance",
       label: "Modules",
-      component: ConfigPage,
       icon: FaCogs,
       children: [
         {
-          path: "/config",
+          path: "/config/attendance",
           label: "Attendance",
-          component: ConfigPage,
         },
         {
-          path: "/config",
+          path: "/config/classes",
           label: "Classes & Groups",
-          component: ConfigPage,
         },
       ],
     },
@@ -64,18 +77,24 @@ function App() {
       path: "reports",
       label: "Reports",
       icon: BiBarChartSquare,
-      component: AboutPage,
     },
   ];
-  const appShellProp = {
-    label: "Admin Console",
-    routes: routes,
-  };
   return (
     <article>
-      <AppShell {...appShellProp}></AppShell>
+      <AppShell
+        label=""
+        routes={routes}
+        navLinks={navLinks}
+        AuthComponent={LoginPage}
+      ></AppShell>
     </article>
   );
 }
 
 export default App;
+
+/*
+<article>
+      <AppShell label="" routes={routes} navLinks={navLinks}></AppShell>
+    </article>
+*/
