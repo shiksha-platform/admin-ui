@@ -17,12 +17,12 @@ import {
 
 import { FaInfoCircle } from "react-icons/fa";
 import { Form } from "@rjsf/chakra-ui";
+import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
 
 import { useParams } from "react-router-dom";
 
 import * as _ from "lodash";
 
-import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
 import React, { useState } from "react";
 import {
   QueryClient,
@@ -30,7 +30,7 @@ import {
   useMutation,
   useQuery,
 } from "react-query";
-import { fetchConfigData, saveConfigData } from "../../services/ConfigService";
+import { fetchConfigData, fetchConfigSchema, saveConfigData } from "../../services/ConfigService";
 
 const ObjectFieldTemplate = (props: any) => {
   return (
@@ -42,7 +42,6 @@ const ObjectFieldTemplate = (props: any) => {
         size="sm"
         backgroundColor="primary.900"
       >
-        <Switch m={2} id="enable-m1" />
         <Box m={2} flex={1}>
           {props.title}
         </Box>
@@ -110,13 +109,23 @@ const ConfigEditor = ({ moduleId }: any) => {
   //TODO: load the config schema fromendpoiint for the moduleId
   console.log(moduleId);
   const config: any = attendanceConfigSchema;
-
   const { isLoading, error, data } = useQuery(
     ["configData", { moduleId }],
     (moduleId) => {
-      return fetchConfigData(moduleId);
+      return fetchConfigData(moduleId).then(res=>{
+        let flatKV = _.reduce(res.data, (result:any, element, index) => {
+          result[element.key] = element.value;
+          return result;
+        }, {})
+        console.log(unflatten(flatKV));
+      /* setFormData(
+          unflatten(flatKV)
+        )
+      */
+
       //TODO: tansform response into json object hierarchy for json form
       //setFormData(data)
+      });
     },
     { retry: false }
   );
@@ -124,7 +133,9 @@ const ConfigEditor = ({ moduleId }: any) => {
   const mutation = useMutation(
     (configData) => {
       console.log(configData);
-      return saveConfigData(configData);
+      return saveConfigData(moduleId, configData).then((res)=>{
+        
+      });
       //return Promise.resolve(configData);
     },
     {
@@ -144,14 +155,7 @@ const ConfigEditor = ({ moduleId }: any) => {
   );
 
   // TODO: remove default values from here and move to on query response
-  const [formData, setFormData] = useState({
-    attendance: {
-      default_attendance_states: ["present", "absent"],
-    },
-    attendance_card: {
-      order_of_attendance_card: "roll_number",
-    },
-  });
+  const [formData, setFormData] = useState({});
 
   const { t } = useTranslation("configui");
 
@@ -175,7 +179,6 @@ const ConfigEditor = ({ moduleId }: any) => {
   //TODO: move this to utils
   const unflatten = (mapData: any) => {
     let result = {};
-    let lookupTbl = {};
     for (const key of Object.keys(mapData)) {
       const value = mapData[key];
       let prefixes = key.split(".");
@@ -201,8 +204,10 @@ const ConfigEditor = ({ moduleId }: any) => {
     console.log("Data submitted: ", form);
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    mutation.mutate(flatData);
-    return true;
+    //mutation.mutate(flatData);
+    saveConfigData(moduleId, flatData)
+    //TODO: refetch data
+    return ;
   };
 
   return (
