@@ -16,9 +16,14 @@ jobs:
         with:
           cmd: install # will run `yarn install` command
       - name:  Build Common UI
+        uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: workspace common-ui build # will run `yarn workspace common-ui build` command
         run: yarn workspace common-ui build
       - name:  Install Common UI
-        run: yarn install
+        uses: borales/actions-yarn@v3.0.0
+        with:
+            cmd: install # will run `yarn install` command
       - name:  Build
         uses: borales/actions-yarn@v3.0.0
         with:
