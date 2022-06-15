@@ -17,6 +17,7 @@ jobs:
           cmd: install # will run `yarn install` command
       - name: Build
         run: |
+          npx rimraf ./**/node_modules
           yarn workspace common-ui build
           yarn install
           yarn build
