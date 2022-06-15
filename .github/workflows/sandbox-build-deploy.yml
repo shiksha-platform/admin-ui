@@ -11,13 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Install Dependency
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: install # will run `yarn install` command
       - name: Build
         run: |
-          npx rimraf ./**/node_modules
+          yarn install
           yarn workspace common-ui build
           yarn install
           yarn build
