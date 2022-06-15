@@ -7,7 +7,6 @@ import {
   Icon,
   Link,
   Spacer,
-  Switch,
   Tab,
   TabList,
   TabPanel,
@@ -27,7 +26,6 @@ import React, { useState } from "react";
 import {
   QueryClient,
   QueryClientProvider,
-  useMutation,
   useQuery,
 } from "react-query";
 import { fetchConfigData, fetchConfigSchema, saveConfigData } from "../../services/ConfigService";
@@ -114,14 +112,18 @@ const ConfigEditor = ({ moduleId }: any) => {
     (moduleId) => {
       return fetchConfigData(moduleId).then(res=>{
         let flatKV = _.reduce(res.data, (result:any, element, index) => {
-          result[element.key] = element.value;
+          try{
+          result[element.key] = JSON.parse(element.value);
           return result;
+          } catch(error){
+            return "";
+          }
         }, {})
         console.log(unflatten(flatKV));
-      /* setFormData(
+       setFormData(
           unflatten(flatKV)
         )
-      */
+      
 
       //TODO: tansform response into json object hierarchy for json form
       //setFormData(data)
@@ -130,25 +132,6 @@ const ConfigEditor = ({ moduleId }: any) => {
     { retry: false }
   );
 
-  const mutation = useMutation(
-    (configData) => {
-      console.log(configData);
-      return saveConfigData(moduleId, configData).then((res)=>{
-        
-      });
-      //return Promise.resolve(configData);
-    },
-    {
-      onSuccess: (data, variable, context) => {
-        console.log(data);
-        //TODO: prompt success and rerender form
-      },
-      onError: (error) => {
-        console.log(error);
-        //TODO: prompt error
-      },
-    }
-  );
 
   const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
@@ -204,7 +187,6 @@ const ConfigEditor = ({ moduleId }: any) => {
     console.log("Data submitted: ", form);
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    //mutation.mutate(flatData);
     saveConfigData(moduleId, flatData)
     //TODO: refetch data
     return ;
