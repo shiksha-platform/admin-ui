@@ -23,12 +23,12 @@ import { useParams } from "react-router-dom";
 import * as _ from "lodash";
 
 import React, { useState } from "react";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "react-query";
-import { fetchConfigData, fetchConfigSchema, saveConfigData } from "../../services/ConfigService";
+  fetchConfigData,
+  fetchConfigSchema,
+  saveConfigData,
+} from "../../services/ConfigService";
 
 const ObjectFieldTemplate = (props: any) => {
   return (
@@ -110,28 +110,28 @@ const ConfigEditor = ({ moduleId }: any) => {
   const { isLoading, error, data } = useQuery(
     ["configData", { moduleId }],
     (moduleId) => {
-      return fetchConfigData(moduleId).then(res=>{
-        let flatKV = _.reduce(res.data, (result:any, element, index) => {
-          try{
-          result[element.key] = JSON.parse(element.value);
-          return result;
-          } catch(error){
-            return "";
-          }
-        }, {})
+      return fetchConfigData(moduleId).then((res) => {
+        let flatKV = _.reduce(
+          res.data,
+          (result: any, element, index) => {
+            try {
+              result[element.key] = JSON.parse(element.value);
+              return result;
+            } catch (error) {
+              return "";
+            }
+          },
+          {}
+        );
         console.log(unflatten(flatKV));
-       setFormData(
-          unflatten(flatKV)
-        )
-      
+        setFormData(unflatten(flatKV));
 
-      //TODO: tansform response into json object hierarchy for json form
-      //setFormData(data)
+        //TODO: tansform response into json object hierarchy for json form
+        //setFormData(data)
       });
     },
     { retry: false }
   );
-
 
   const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
@@ -187,9 +187,9 @@ const ConfigEditor = ({ moduleId }: any) => {
     console.log("Data submitted: ", form);
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    saveConfigData(moduleId, flatData)
+    saveConfigData(moduleId, flatData);
     //TODO: refetch data
-    return ;
+    return;
   };
 
   return (
