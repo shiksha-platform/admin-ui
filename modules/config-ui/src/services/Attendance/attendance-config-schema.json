@@ -157,7 +157,7 @@
             "title": "",
             "type": "object",
             "properties": {
-              "Attendance": {
+              "attendance": {
                 "type": "object",
                 "title": "Communication",
                 "properties": {
