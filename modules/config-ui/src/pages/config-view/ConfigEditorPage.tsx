@@ -33,22 +33,33 @@ import {
 const ObjectFieldTemplate = (props: any) => {
   return (
     <div>
-      <Heading
-        m={1}
-        display={"flex"}
-        as="h4"
-        size="sm"
-        backgroundColor="primary.900"
-      >
-        <Box m={2} flex={1}>
-          {props.title}
-        </Box>
-      </Heading>
+      {props.title && (
+        <Heading
+          m={1}
+          display={"flex"}
+          as="h4"
+          size="sm"
+          backgroundColor="primary.900"
+        >
+          <Box p={2}>{props.title}</Box>
+        </Heading>
+      )}
       <Box>
         {props.properties.map((element: any, index: number) => (
-          <div key={index} className="property-wrapper">
-            {element.content}
-          </div>
+          <Box marginBottom={"20px"}>
+            <div
+              key={index}
+              className="property-wrapper"
+              style={{
+                backgroundColor: "#ffffff",
+                borderBottomLeftRadius: "5px",
+                borderBottomRightRadius: "5px",
+                padding: "10px 10px 5px 10px",
+              }}
+            >
+              {element.content}
+            </div>
+          </Box>
         ))}
       </Box>
     </div>
@@ -225,7 +236,7 @@ const ConfigEditor = ({ moduleId }: any) => {
           return (
             <Button
               key={index}
-              style={{ borderRadius: 0, margin: "0px" }}
+              style={{ borderRadius: "5px", margin: "0px" }}
               color="primary.100"
               variant="outline"
             >
