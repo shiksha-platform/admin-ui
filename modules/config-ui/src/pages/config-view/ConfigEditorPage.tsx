@@ -12,6 +12,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaInfoCircle } from "react-icons/fa";
@@ -32,6 +33,7 @@ import {
 const ObjectFieldTemplate = (props: any) => {
   return (
     <div>
+      { props.title  && (
       <Heading
         m={1}
         display={"flex"}
@@ -43,6 +45,8 @@ const ObjectFieldTemplate = (props: any) => {
           {props.title}
         </Box>
       </Heading>
+      )
+      }
       <Box>
         {props.properties.map((element: any, index: number) => (
           <div key={index} className="property-wrapper">
@@ -114,6 +118,8 @@ const ConfigEditor = ({ moduleId }: any) => {
   );
   const [formData, setFormData] = useState({});
 
+  const toast = useToast()
+
   useEffect(() => {
     fetchConfigSchema(moduleId).then((res) => {
       console.log(res);
@@ -125,9 +131,15 @@ const ConfigEditor = ({ moduleId }: any) => {
           res.data,
           (result: any, element, index) => {
             try {
-              result[element.key] = JSON.parse(element.value);
+              if(_.isArray(element.value)){
+                result[element.key] = element.value;
+              } else {
+                result[element.key] = JSON.parse(element.value);
+              }
               return result;
             } catch (error) {
+              console.log(error)
+              result[element.key] = element.value;
               return result;
             }
           },
@@ -184,7 +196,18 @@ const ConfigEditor = ({ moduleId }: any) => {
   const onSubmit = (form: any) => {
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    saveConfigData(moduleId, flatData);
+    saveConfigData(moduleId, flatData).then(res=>{
+      setFormData(formDataObject);
+      toast({
+        position: 'bottom',
+        render: () => (
+          <Box color='white' p={3} bg='green.500'>
+            Configuration saved successfully.
+          </Box>
+        ),
+      })
+      
+    });
     return;
   };
 
