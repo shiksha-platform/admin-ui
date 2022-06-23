@@ -112,16 +112,7 @@
               }
             }
           },
-          "uischema": {
-            "class_attendance": {
-              "previous_attendance_allowed": {
-                "ui:widget": "radio"
-              },
-              "allow_to_mark_all_attendance_at_once": {
-                "ui:widget": "radio"
-              }
-            }
-          }
+          "uischema": {}
         },
         {
           "name": "report",
