@@ -68,8 +68,8 @@ function App() {
           label: "Attendance",
         },
         {
-          path: "/config/classes",
-          label: "Classes & Groups",
+          path: "/config/worksheet",
+          label: "Worksheet",
         },
       ],
     },

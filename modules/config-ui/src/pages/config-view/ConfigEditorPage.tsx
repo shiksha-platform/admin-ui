@@ -12,6 +12,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaInfoCircle } from "react-icons/fa";
@@ -22,8 +23,8 @@ import { useParams } from "react-router-dom";
 
 import * as _ from "lodash";
 
-import React, { useState } from "react";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import {
   fetchConfigData,
   fetchConfigSchema,
@@ -46,7 +47,7 @@ const ObjectFieldTemplate = (props: any) => {
       )}
       <Box>
         {props.properties.map((element: any, index: number) => (
-          <Box marginBottom={"20px"}>
+          <Box marginBottom={"20px"} key={index}>
             <div
               key={index}
               className="property-wrapper"
@@ -115,61 +116,68 @@ const ConfigEditorPage = () => {
   );
 };
 const ConfigEditor = ({ moduleId }: any) => {
-  //TODO: load the config schema fromendpoiint for the moduleId
-  console.log(moduleId);
-  const config: any = attendanceConfigSchema;
-  const { isLoading, error, data } = useQuery(
-    ["configData", { moduleId }],
-    (moduleId) => {
-      return fetchConfigData(moduleId).then((res) => {
-        let flatKV = _.reduce(
-          res.data,
-          (result: any, element, index) => {
-            try {
-              result[element.key] = JSON.parse(element.value);
-              return result;
-            } catch (error) {
-              return "";
-            }
-          },
-          {}
-        );
-        console.log(unflatten(flatKV));
-        setFormData(unflatten(flatKV));
-
-        //TODO: tansform response into json object hierarchy for json form
-        //setFormData(data)
-      });
-    },
-    { retry: false }
-  );
+  const [config, setConfig] = useState({
+    name: "",
+    label: "",
+    subModules: [],
+  });
 
   const [selectedSubModule, setSelectedSubModule] = useState<SubModuleConfig>(
     config["subModules"][0]
   );
-
-  // TODO: remove default values from here and move to on query response
   const [formData, setFormData] = useState({});
+
+  const toast = useToast();
+
+  useEffect(() => {
+    fetchConfigSchema(moduleId).then((res) => {
+      console.log(res);
+      let configSchema: any = JSON.parse(res.data[0]["formSchema"]);
+      setConfig(configSchema);
+      setSelectedSubModule(configSchema["subModules"][0]);
+      fetchConfigData(moduleId).then((res) => {
+        let flatKV = _.reduce(
+          res.data,
+          (result: any, element, index) => {
+            try {
+              if (_.isArray(element.value)) {
+                result[element.key] = element.value;
+              } else {
+                result[element.key] = JSON.parse(element.value);
+              }
+              return result;
+            } catch (error) {
+              console.log(error);
+              result[element.key] = element.value;
+              return result;
+            }
+          },
+          {}
+        );
+        const postData = unflatten(flatKV);
+        setFormData(postData);
+      });
+    });
+  }, [moduleId]);
 
   const { t } = useTranslation("configui");
 
   //TODO: move this to utils
-  const flatten = (obj: any, prefix: string[] = [], current: any = {}) => {
-    if (typeof obj === "object" && obj !== null) {
-      for (const key of Object.keys(obj)) {
-        if (Array.isArray(obj[key])) {
-          prefix = prefix.concat(key);
-          current[prefix.join(".")] = obj[key];
-        } else {
-          flatten(obj[key], prefix.concat(key), current);
-        }
+  const flatten = (obj: any = {}, res: any = {}, extraKey = "") => {
+    console.log(extraKey);
+    console.log(obj);
+    for (let key in obj) {
+      console.log(key);
+      console.log(typeof obj[key]);
+      if (typeof obj[key] !== "object" || _.isArray(obj[key])) {
+        res[extraKey + key] = obj[key];
+      } else {
+        console.log("flattenJSON");
+        flatten(obj[key], res, `${extraKey}${key}.`);
       }
-    } else {
-      current[prefix.join(".")] = obj;
     }
-    return current;
+    return res;
   };
-
   //TODO: move this to utils
   const unflatten = (mapData: any) => {
     let result = {};
@@ -195,11 +203,19 @@ const ConfigEditor = ({ moduleId }: any) => {
 
   let configForms: any[] = [];
   const onSubmit = (form: any) => {
-    console.log("Data submitted: ", form);
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    saveConfigData(moduleId, flatData);
-    //TODO: refetch data
+    saveConfigData(moduleId, flatData).then((res) => {
+      setFormData(formDataObject);
+      toast({
+        position: "bottom",
+        render: () => (
+          <Box color="white" p={3} bg="green.500">
+            Configuration saved successfully.
+          </Box>
+        ),
+      });
+    });
     return;
   };
 
@@ -211,50 +227,32 @@ const ConfigEditor = ({ moduleId }: any) => {
         </Heading>
         <Spacer></Spacer>
       </Flex>
-      {isLoading ? (
-        <Flex direction={"row"}>
-          <Heading as="h5" size="sm">
-            Loading...
-          </Heading>
-          <Spacer></Spacer>
-        </Flex>
-      ) : (
-        <></>
-      )}
-      {error ? (
-        <Flex direction={"row"}>
-          <Heading as="h5" size="sm">
-            {error instanceof Error ? error.message : "Error"}
-          </Heading>
-          <Spacer></Spacer>
-        </Flex>
-      ) : (
-        <></>
-      )}
-      <Box marginY={4} p={0}>
-        {config["subModules"].map((m: SubModuleConfig, index: number) => {
-          return (
-            <Button
-              key={index}
-              style={{ borderRadius: "5px", margin: "0px" }}
-              color="primary.100"
-              variant="outline"
-            >
-              <Link
-                onClick={() => {
-                  setSelectedSubModule(m);
-                }}
+      {config["subModules"].length > 1 && (
+        <Box marginY={4} p={0}>
+          {config["subModules"].map((m: SubModuleConfig, index: number) => {
+            return (
+              <Button
+                key={index}
+                style={{ borderRadius: "5px", margin: "0px" }}
+                color="primary.100"
+                variant="outline"
               >
-                {m.label}
-              </Link>
-            </Button>
-          );
-        })}
-      </Box>
+                <Link
+                  onClick={() => {
+                    setSelectedSubModule(m);
+                  }}
+                >
+                  {m.label}
+                </Link>
+              </Button>
+            );
+          })}
+        </Box>
+      )}
       <Box>
         <Tabs>
           <TabList>
-            {selectedSubModule.sections.map(
+            {selectedSubModule?.sections.map(
               (section: SectionConfig, index: number) => {
                 return <Tab key={index}>{section.label}</Tab>;
               }
@@ -262,7 +260,7 @@ const ConfigEditor = ({ moduleId }: any) => {
           </TabList>
 
           <TabPanels>
-            {selectedSubModule.sections.map(
+            {selectedSubModule?.sections.map(
               (section: SectionConfig, index: number) => {
                 return (
                   <TabPanel key={index}>
