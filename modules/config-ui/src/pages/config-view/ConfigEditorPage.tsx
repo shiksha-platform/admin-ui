@@ -17,6 +17,7 @@ import {
 
 import { FaInfoCircle } from "react-icons/fa";
 import { Form } from "@rjsf/chakra-ui";
+import attendanceConfigSchema from "../../services/Attendance/attendance-config-schema.json";
 
 import { useParams } from "react-router-dom";
 
@@ -41,16 +42,25 @@ const ObjectFieldTemplate = (props: any) => {
           size="sm"
           backgroundColor="primary.900"
         >
-          <Box m={2} flex={1}>
-            {props.title}
-          </Box>
+          <Box p={2}>{props.title}</Box>
         </Heading>
       )}
       <Box>
         {props.properties.map((element: any, index: number) => (
-          <div key={index} className="property-wrapper">
-            {element.content}
-          </div>
+          <Box marginBottom={"20px"} key={index}>
+            <div
+              key={index}
+              className="property-wrapper"
+              style={{
+                backgroundColor: "#ffffff",
+                borderBottomLeftRadius: "5px",
+                borderBottomRightRadius: "5px",
+                padding: "10px 10px 5px 10px",
+              }}
+            >
+              {element.content}
+            </div>
+          </Box>
         ))}
       </Box>
     </div>
@@ -223,14 +233,17 @@ const ConfigEditor = ({ moduleId }: any) => {
             return (
               <Button
                 key={index}
-                style={{ borderRadius: 0, margin: "0px" }}
+                style={{ borderRadius: "5px", margin: "0px" }}
                 color="primary.100"
                 variant="outline"
-                onClick={() => {
-                  setSelectedSubModule(m);
-                }}
               >
-                <Link>{m.label}</Link>
+                <Link
+                  onClick={() => {
+                    setSelectedSubModule(m);
+                  }}
+                >
+                  {m.label}
+                </Link>
               </Button>
             );
           })}

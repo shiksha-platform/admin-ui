@@ -25,7 +25,7 @@ const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
   }
   if (children) {
     return (
-      <li style={{ margin: '8px' }}>
+      <li style={{ marginTop: '40px', marginBottom: '40px' }}>
         <Flex direction={'row'} onClick={toggle}>
           {icon && <Icon as={icon} />}
           <Box px='2'>
@@ -43,7 +43,7 @@ const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
     )
   } else
     return (
-      <li style={{ margin: '8px' }}>
+      <li style={{ marginTop: '10px', marginBottom: '10px' }}>
         <Flex direction={'row'}>
           {icon && <Icon as={icon} />}
           <Box px='2'>
@@ -76,7 +76,7 @@ export const SideNav = ({ routes, navLinks }: any) => {
           {/* Router component can have only 1 child. We'll use a simple
           div element for this example. */}
           <Flex direction={'row'} bg={'white'}>
-            <Box p={'8px'} width='180px'>
+            <Box p={'20px'} width='250px' height='auto'>
               <NavMenuList navLinks={navLinks}></NavMenuList>
             </Box>
             <Divider
@@ -85,7 +85,13 @@ export const SideNav = ({ routes, navLinks }: any) => {
               color={'gray.100'}
             />
 
-            <div style={{ padding: '8px' }}>
+            <div
+              style={{
+                padding: '40px 8px',
+                flex: '1',
+                backgroundColor: '#f9f9f9'
+              }}
+            >
               <Routes>
                 {routes.map((item: any, index: number) => {
                   return (

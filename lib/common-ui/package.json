@@ -85,7 +85,7 @@
     "lodash": "^4.17.21",
     "postal": "^2.0.6",
     "react-i18next": "^11.15.3",
-    "react-icons": "^4.3.1",
+    "react-icons": "^4.3.1","remixicon-react": "^1.0.0",
     "react-router-dom": "^6.3.0"
   }
 }
