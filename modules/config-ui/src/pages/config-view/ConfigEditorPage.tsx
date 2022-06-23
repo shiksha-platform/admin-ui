@@ -33,20 +33,19 @@ import {
 const ObjectFieldTemplate = (props: any) => {
   return (
     <div>
-      { props.title  && (
-      <Heading
-        m={1}
-        display={"flex"}
-        as="h4"
-        size="sm"
-        backgroundColor="primary.900"
-      >
-        <Box m={2} flex={1}>
-          {props.title}
-        </Box>
-      </Heading>
-      )
-      }
+      {props.title && (
+        <Heading
+          m={1}
+          display={"flex"}
+          as="h4"
+          size="sm"
+          backgroundColor="primary.900"
+        >
+          <Box m={2} flex={1}>
+            {props.title}
+          </Box>
+        </Heading>
+      )}
       <Box>
         {props.properties.map((element: any, index: number) => (
           <div key={index} className="property-wrapper">
@@ -118,7 +117,7 @@ const ConfigEditor = ({ moduleId }: any) => {
   );
   const [formData, setFormData] = useState({});
 
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
     fetchConfigSchema(moduleId).then((res) => {
@@ -131,14 +130,14 @@ const ConfigEditor = ({ moduleId }: any) => {
           res.data,
           (result: any, element, index) => {
             try {
-              if(_.isArray(element.value)){
+              if (_.isArray(element.value)) {
                 result[element.key] = element.value;
               } else {
                 result[element.key] = JSON.parse(element.value);
               }
               return result;
             } catch (error) {
-              console.log(error)
+              console.log(error);
               result[element.key] = element.value;
               return result;
             }
@@ -196,17 +195,16 @@ const ConfigEditor = ({ moduleId }: any) => {
   const onSubmit = (form: any) => {
     let formDataObject = form.formData;
     let flatData = flatten(formDataObject);
-    saveConfigData(moduleId, flatData).then(res=>{
+    saveConfigData(moduleId, flatData).then((res) => {
       setFormData(formDataObject);
       toast({
-        position: 'bottom',
+        position: "bottom",
         render: () => (
-          <Box color='white' p={3} bg='green.500'>
+          <Box color="white" p={3} bg="green.500">
             Configuration saved successfully.
           </Box>
         ),
-      })
-      
+      });
     });
     return;
   };
