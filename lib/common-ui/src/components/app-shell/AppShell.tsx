@@ -33,8 +33,8 @@ export const AppShell = ({
   navLinks,
   AuthComponent
 }: AppShellProps) => {
-  const userName = localStorage.getItem('user_name')
-    ? localStorage.getItem('user_name')
+  const userName = getLoggedInUserInfo()
+    ? getLoggedInUserInfo()['given_name']
     : ''
   const [user, setUser] = React.useState<User>({ name: userName })
   const [token, setToken] = useState(localStorage.getItem('token'))
