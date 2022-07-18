@@ -14,7 +14,7 @@ export const fetchAnnouncements = async () => {
     .then((res) => {
       return res.data;
     });
-}
+};
 
 export const fetchAnnouncement = async (id: any) => {
   return await axios
@@ -29,7 +29,6 @@ export const fetchAnnouncement = async (id: any) => {
 };
 
 export const createAnnouncement = async (announcementData: any) => {
-
   var formData = qs.stringify(announcementData);
   console.log(formData);
   //TO-DO: Convert [] in additionalFields to {}
@@ -37,7 +36,7 @@ export const createAnnouncement = async (announcementData: any) => {
     .post(baseUrl, formData, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     })
     .then((res) => {
@@ -50,14 +49,13 @@ export const updateAnnouncement = async (announcementData: any) => {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
-      data: JSON.stringify(announcementData)
+      data: JSON.stringify(announcementData),
     })
     .then((res) => {
       return res.data;
     });
 };
 export const deleteAnnouncement = async (id: any) => {
-
   return await axios
     .delete(`${baseUrl}${id}`, {
       headers: {
