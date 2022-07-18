@@ -1,115 +1,95 @@
 {
-    "name": "announcements",
-    "label": "Announcements",
-    "subModules": [
+  "name": "announcements",
+  "label": "Announcements",
+  "subModules": [
+    {
+      "name": "configure-announcements",
+      "label": "Configuration",
+      "sections": [
         {
-            "name": "configure-announcements",
-            "label": "Configuration",
-            "sections": [
-                {
-                    "name": "announcement-configuration",
-                    "label": "",
-                    "schema": {
-                        "title": "",
-                        "type": "object",
-                        "properties": {
-                            "page_size": {
-                                "title": "No. of announcements fetched at a time (page size)",
-                                "type": "number",
-                                "default": 20
-                            },
-                            "pinned_announcement_limit": {
-                                "title": "Maximum limit of pinned announcements",
-                                "type": "number",
-                                "default": 2
-                            },
-                            "announcement_types": {
-                                "type": "object",
-                                "title": "Announcement Types",
-                                "properties": {
-                                    "default_announcement_types": {
-                                        "title": "Available announcement types",
-                                        "type": "array",
-                                        "default": [
-                                            "event",
-                                            "general",
-                                            "app"
-                                        ],
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "event",
-                                                "general",
-                                                "app"
-                                            ]
-                                        },
-                                        "uniqueItems": true
-                                    }
-                                }
-                            },
-                            "filter_options": {
-                                "type": "object",
-                                "title": "Filter and search options",
-                                "properties": {
-                                    "available_filters": {
-                                        "title": "Available filters",
-                                        "type": "array",
-                                        "default": [
-                                            "dateModified","author","type"
-                                        ],
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "dateModified","author","type"
-                                            ],
-                                            "enumNames": [
-                                                "Date Modified",
-                                                "Author",
-                                                "Type of announcement"
-                                            ]
-                                        },
-                                        "uniqueItems": true
-                                    },
-                                    "date_filter_options": {
-                                        "title": "Options for date filters",
-                                        "type": "array",
-                                        "default": [
-                                            "lastWeek","lastDay","lastMonth"
-                                        ],
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                "lastWeek","lastDay","lastMonth"
-                                            ],
-                                            "enumNames": [
-                                                "Last week",
-                                                "Last day",
-                                                "Last month"
-                                            ]
-                                        },
-                                        "uniqueItems": true
-                                    },
-                                    "allow_search": {
-                                        "title": "Enable searchbar",
-                                        "type": "boolean",
-                                        "default": true
-                                    }
-                                }
-                            }
-                        }
+          "name": "announcement-configuration",
+          "label": "",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "page_size": {
+                "title": "No. of announcements fetched at a time (page size)",
+                "type": "number",
+                "default": 20
+              },
+              "pinned_announcement_limit": {
+                "title": "Maximum limit of pinned announcements",
+                "type": "number",
+                "default": 2
+              },
+              "announcement_types": {
+                "type": "object",
+                "title": "Announcement Types",
+                "properties": {
+                  "default_announcement_types": {
+                    "title": "Available announcement types",
+                    "type": "array",
+                    "default": ["event", "general", "app"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["event", "general", "app"]
                     },
-                    "uischema": {
-                        "class_attendance": {
-                            "previous_attendance_allowed": {
-                                "ui:widget": "radio"
-                            },
-                            "allow_to_mark_all_attendance_at_once": {
-                                "ui:widget": "radio"
-                            }
-                        }
-                    }
+                    "uniqueItems": true
+                  }
                 }
-            ]
+              },
+              "filter_options": {
+                "type": "object",
+                "title": "Filter and search options",
+                "properties": {
+                  "available_filters": {
+                    "title": "Available filters",
+                    "type": "array",
+                    "default": ["dateModified", "author", "type"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["dateModified", "author", "type"],
+                      "enumNames": [
+                        "Date Modified",
+                        "Author",
+                        "Type of announcement"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "date_filter_options": {
+                    "title": "Options for date filters",
+                    "type": "array",
+                    "default": ["lastWeek", "lastDay", "lastMonth"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["lastWeek", "lastDay", "lastMonth"],
+                      "enumNames": ["Last week", "Last day", "Last month"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "allow_search": {
+                    "title": "Enable searchbar",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              }
+            }
+          },
+          "uischema": {
+            "class_attendance": {
+              "previous_attendance_allowed": {
+                "ui:widget": "radio"
+              },
+              "allow_to_mark_all_attendance_at_once": {
+                "ui:widget": "radio"
+              }
+            }
+          }
         }
-    ]
+      ]
+    }
+  ]
 }

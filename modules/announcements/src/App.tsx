@@ -23,18 +23,18 @@ const AboutPage = () => <h1>About Page</h1>;
 initializeI18n([], `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`);
 
 function App() {
-  const routes : RouteProps[]= [
+  const routes: RouteProps[] = [
     {
       path: "/",
       component: ViewAnnouncements,
     },
     {
       path: "/create",
-      component: CreateAnnouncement
+      component: CreateAnnouncement,
     },
     {
       path: "/allannouncements",
-      component: ViewAnnouncements
+      component: ViewAnnouncements,
     },
     {
       path: "/announcement/:announcementId",
@@ -45,18 +45,20 @@ function App() {
       component: AboutPage,
     },
   ];
-  let navLinks: NavMenuItemProps[] = [{
-    path: "/",
-    label: "Home",
-  },
-  {
-    path: "/allannouncements",
-    label: "Announcements",
-  },
-  {
-    path: "about",
-    label: "About",
-  }];
+  let navLinks: NavMenuItemProps[] = [
+    {
+      path: "/",
+      label: "Home",
+    },
+    {
+      path: "/allannouncements",
+      label: "Announcements",
+    },
+    {
+      path: "about",
+      label: "About",
+    },
+  ];
   const appShellProp: AppShellProps = {
     label: "",
     routes: routes,
