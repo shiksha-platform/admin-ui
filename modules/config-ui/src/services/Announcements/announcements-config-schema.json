@@ -30,10 +30,16 @@
                   "default_announcement_types": {
                     "title": "Available announcement types",
                     "type": "array",
-                    "default": ["event", "general", "app"],
+                    "default": [
+                      "event",
+                      "general"
+                    ],
                     "items": {
                       "type": "string",
-                      "enum": ["event", "general", "app"]
+                      "enum": [
+                        "event",
+                        "general"
+                      ]
                     },
                     "uniqueItems": true
                   }
@@ -46,26 +52,23 @@
                   "available_filters": {
                     "title": "Available filters",
                     "type": "array",
-                    "default": ["dateModified", "author", "type"],
+                    "default": [
+                      "dateModified",
+                      "author",
+                      "type"
+                    ],
                     "items": {
                       "type": "string",
-                      "enum": ["dateModified", "author", "type"],
+                      "enum": [
+                        "dateModified",
+                        "author",
+                        "type"
+                      ],
                       "enumNames": [
                         "Date Modified",
                         "Author",
                         "Type of announcement"
                       ]
-                    },
-                    "uniqueItems": true
-                  },
-                  "date_filter_options": {
-                    "title": "Options for date filters",
-                    "type": "array",
-                    "default": ["lastWeek", "lastDay", "lastMonth"],
-                    "items": {
-                      "type": "string",
-                      "enum": ["lastWeek", "lastDay", "lastMonth"],
-                      "enumNames": ["Last week", "Last day", "Last month"]
                     },
                     "uniqueItems": true
                   },
@@ -75,16 +78,6 @@
                     "default": true
                   }
                 }
-              }
-            }
-          },
-          "uischema": {
-            "class_attendance": {
-              "previous_attendance_allowed": {
-                "ui:widget": "radio"
-              },
-              "allow_to_mark_all_attendance_at_once": {
-                "ui:widget": "radio"
               }
             }
           }

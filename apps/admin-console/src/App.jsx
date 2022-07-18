@@ -71,6 +71,10 @@ function App() {
           path: "/config/worksheet",
           label: "Worksheet",
         },
+        {
+          path: "/config/announcements",
+          label: "Announcements",
+        },
       ],
     },
     {
