@@ -7,6 +7,7 @@ module.exports = {
   },
   remotes: {
     configui: `configui@[window.appModules.configui.url]/moduleEntry.js`,
+    announcements: `announcements@[window.appModules.announcements.url]/moduleEntry.js`,
   },
   filename: "moduleEntry.js",
   shared: {

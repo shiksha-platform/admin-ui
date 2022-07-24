@@ -8,6 +8,9 @@ import { BiBarChartSquare } from "react-icons/bi";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
+const ViewAnnouncements = React.lazy(() => import("announcements/ViewAnnouncements"));
+const CreateAnnouncement = React.lazy(() => import("announcements/CreateAnnouncement"));
+const EditAnnouncement = React.lazy(() => import("announcements/EditAnnouncement"));
 const RegistryPage = () => <h1>Registry Page</h1>;
 const AboutPage = () => <h1>About Page</h1>;
 
@@ -31,9 +34,22 @@ function App() {
       component: ConfigPage,
     },
     {
+      path: "/announcements/create",
+      component: CreateAnnouncement,
+    },
+    {
+      path: "/announcements",
+      component: ViewAnnouncements,
+    },
+    {
+      path: "/announcements/edit/:announcementId",
+      component: EditAnnouncement,
+    },
+    {
       path: "reports",
       component: AboutPage,
     },
+
   ];
 
   const navLinks = [
@@ -95,6 +111,11 @@ function App() {
 >>>>>>> 1cf553d (Integrated announcement config with admin console)
         },
       ],
+    },
+    {
+      path: "/announcements",
+      label: "Announcements",
+      icon: BiBarChartSquare,
     },
     {
       path: "reports",

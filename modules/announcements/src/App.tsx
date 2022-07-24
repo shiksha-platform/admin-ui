@@ -29,15 +29,15 @@ function App() {
       component: ViewAnnouncements,
     },
     {
-      path: "/create",
+      path: "/announcements/create",
       component: CreateAnnouncement,
     },
     {
-      path: "/allannouncements",
+      path: "/announcements",
       component: ViewAnnouncements,
     },
     {
-      path: "/announcement/:announcementId",
+      path: "/announcements/edit/:announcementId",
       component: EditAnnouncement,
     },
     {
@@ -51,7 +51,7 @@ function App() {
       label: "Home",
     },
     {
-      path: "/allannouncements",
+      path: "/announcements",
       label: "Announcements",
     },
     {
