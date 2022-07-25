@@ -8,7 +8,7 @@ import AnnouncementForm from "../components/AnnouncementForm";
 import SubmitDialog from "../components/SubmitDialog";
 
 const CreateAnnouncement = () => {
-  const { t } = useTranslation("configui");
+  const { t } = useTranslation("announcements");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const cancelRef = React.useRef() as RefObject<any>;
@@ -29,7 +29,7 @@ const CreateAnnouncement = () => {
     <Box marginX={4}>
       <Flex direction={"row"}>
         <Heading as="h4" size="md" mb="2">
-          Create Announcement
+          {t("CREATE_ANNOUNCEMENT")}
         </Heading>
       </Flex>
       <Divider></Divider>
