@@ -7,8 +7,10 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const SubmitDialog: React.FC<any> = ({ isOpen, onClose, cancelRef }) => {
+  const { t } = useTranslation("announcements");
   return (
     <AlertDialog
       isOpen={isOpen}
@@ -29,7 +31,7 @@ const SubmitDialog: React.FC<any> = ({ isOpen, onClose, cancelRef }) => {
                 thickness="3px"
                 color="primary.100"
               ></Spinner>
-              <h4>Submitting form</h4>
+              <h4>{t("SUBMITTING_FORM")}</h4>
             </Stack>
           </AlertDialogBody>
         </AlertDialogContent>

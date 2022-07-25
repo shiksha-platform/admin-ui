@@ -40,10 +40,12 @@ import {
   deleteAnnouncement,
   fetchAnnouncements,
 } from "../services/AnnouncementService";
+import { useTranslation } from "react-i18next";
 
 const PAGE_SIZE = 3;
 
-const ViewAnnouncements = ({ toast }: any) => {
+const ViewAnnouncements = () => {
+  const { t } = useTranslation("announcements");
   const [announcementsData, setAnnouncementsData] = useState<any>();
   const [pageIndex, setPageIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -81,14 +83,14 @@ const ViewAnnouncements = ({ toast }: any) => {
     <Box marginX={4}>
       <Flex direction={"row"} mb="2">
         <Heading as="h4" size="md">
-          View Announcements
+          {t("ALL_ANNOUNCEMENTS")}
         </Heading>
       </Flex>
       <Divider></Divider>
       <Flex width="100%" justifyContent={"flex-end"}>
         <NavLink to={`create`}>
           <Button size="sm" mt="5" mb="3" colorScheme="green">
-            Create New
+            {t("CREATE_NEW")}
           </Button>
         </NavLink>
       </Flex>
@@ -97,10 +99,10 @@ const ViewAnnouncements = ({ toast }: any) => {
           <Table variant="striped">
             <Thead>
               <Tr>
-                <Th>Title</Th>
-                <Th>Date Modified</Th>
-                <Th>Status</Th>
-                <Th>Actions</Th>
+                <Th>{t("TITLE")}</Th>
+                <Th>{t("DATE_MODIFIED")}</Th>
+                <Th>{t("STATUS")}</Th>
+                <Th>{t("ACTIONS")}</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -137,7 +139,7 @@ const ViewAnnouncements = ({ toast }: any) => {
                                 : "default"
                             }
                           >
-                            <Text casing="capitalize">{val.status}</Text>
+                            <Text>{t(val.status.toUpperCase())}</Text>
                           </Badge>
                         </Td>
                         <Td>
@@ -145,10 +147,10 @@ const ViewAnnouncements = ({ toast }: any) => {
                             alignItems={"center"}
                             justifyContent="flex-start"
                           >
-                            <Tooltip label="Edit announcement">
+                            <Tooltip label={t("EDIT_ANNOUNCEMENT")}>
                               <IconButton
                                 icon={<FaEdit />}
-                                aria-label={"Edit announcement"}
+                                aria-label="Edit announcement"
                                 variant="ghost"
                                 onClick={() =>
                                   navigate(
@@ -161,7 +163,7 @@ const ViewAnnouncements = ({ toast }: any) => {
                               />
                             </Tooltip>
                             <Popover>
-                              <Tooltip label="Delete announcement">
+                              <Tooltip label={t("DELETE_ANNOUNCEMENT")}>
                                 <Box display="inline-block">
                                   <PopoverTrigger>
                                     <IconButton
@@ -176,7 +178,7 @@ const ViewAnnouncements = ({ toast }: any) => {
                                 <PopoverContent width="fit-content">
                                   <PopoverArrow />
                                   <PopoverHeader textAlign={"center"}>
-                                    Confirm deletion
+                                    {t("CONFIRM_DELETION")}
                                   </PopoverHeader>
                                   <PopoverBody textAlign={"center"}>
                                     <Button
@@ -192,7 +194,7 @@ const ViewAnnouncements = ({ toast }: any) => {
                                         );
                                       }}
                                     >
-                                      Delete
+                                      {t("DELETE")}
                                     </Button>
                                   </PopoverBody>
                                 </PopoverContent>
@@ -226,7 +228,7 @@ const ViewAnnouncements = ({ toast }: any) => {
           >
             <AlertIcon boxSize="40px" />
             <AlertTitle mt={4} mb={1} fontSize="lg">
-              Error fetching data!
+              {t("FETCH_ERROR")}
             </AlertTitle>
             <AlertDescription>{errMsg}</AlertDescription>
           </Alert>

@@ -47,7 +47,7 @@ const AnnouncementForm: React.FC<any> = ({
   initialData = {},
   onFormSubmit,
 }: any) => {
-  const { t } = useTranslation("configui");
+  const { t } = useTranslation("announcements");
   return (
     <Formik
       enableReinitialize
@@ -66,7 +66,7 @@ const AnnouncementForm: React.FC<any> = ({
         >
           <Stack spacing="6" p="5">
             <FormControl isRequired>
-              <FormLabel htmlFor="title">Title</FormLabel>
+              <FormLabel htmlFor="title">{t("TITLE")}</FormLabel>
               <Field
                 as={Input}
                 name="title"
@@ -81,7 +81,7 @@ const AnnouncementForm: React.FC<any> = ({
               ></Field>
             </FormControl>
             <FormControl isRequired>
-              <FormLabel htmlFor="author">Author</FormLabel>
+              <FormLabel htmlFor="author">{t("AUTHOR")}</FormLabel>
               <Field
                 as={Input}
                 name="author"
@@ -97,20 +97,20 @@ const AnnouncementForm: React.FC<any> = ({
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="announcementType">
-                Announcement Type
+                {t("ANNOUNCEMENT_TYPE")}
               </FormLabel>
               <Field as={Select} name="announcementType">
-                <option value="event">Event</option>
-                <option value="general">General</option>
+                <option value="event">{t("EVENT")}</option>
+                <option value="general">{t("GENERAL")}</option>
               </Field>
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="data">Announcement data</FormLabel>
+              <FormLabel htmlFor="data">{t("ANNOUNCEMENT_DATA")}</FormLabel>
               <Field as={Textarea} name="data"></Field>
             </FormControl>
             <FormControl display="flex" alignItems="center">
               <FormLabel htmlFor="isPinned">
-                Set announcement as pinned
+                {t("SET_ANNOUNCEMENT_AS_PINNED")}
               </FormLabel>
               <Field
                 as={Switch}
@@ -123,7 +123,7 @@ const AnnouncementForm: React.FC<any> = ({
               display={props.values.isPinned === true ? "flex" : "none"}
             >
               <FormLabel htmlFor="pinnedAnnouncementProperties.isDismissable">
-                Set pinned announcement as dismissable
+                {t("SET_PINNED_ANNOUNCEMENT_AS_DISMISSABLE")}
               </FormLabel>
               <Field
                 as={Switch}
@@ -135,12 +135,12 @@ const AnnouncementForm: React.FC<any> = ({
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="additionalTagsInput">
-                Additional tags
+                {t("ADDITIONAL_TAGS")}
               </FormLabel>
               <Field
                 as={Input}
                 name="additionalTagsInput"
-                placeholder="type additional tag and hit 'Enter' key"
+                placeholder={t("ADDITIONAL_TAG_PLACEHOLDER")}
                 onKeyDown={(e: any) => {
                   if (e.code === "Enter" || e.code === "NumpadEnter") {
                     const tagVal = props.getFieldMeta(
@@ -185,10 +185,10 @@ const AnnouncementForm: React.FC<any> = ({
               </Flex>
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="status">Announcement Status</FormLabel>
+              <FormLabel htmlFor="status">{t("STATUS")}</FormLabel>
               <Field as={Select} name="status">
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
+                <option value="draft">{t("DRAFT")}</option>
+                <option value="published">{t("PUBLISHED")}</option>
               </Field>
             </FormControl>
           </Stack>
@@ -200,11 +200,11 @@ const AnnouncementForm: React.FC<any> = ({
               color={"primary.100"}
               isLoading={props.isSubmitting === true}
             >
-              Submit
+              {t("SUBMIT")}
             </Button>
             <NavLink to="/announcements">
               <Button mt="5" variant="outline">
-                Cancel
+                {t("CANCEL")}
               </Button>
             </NavLink>
           </HStack>

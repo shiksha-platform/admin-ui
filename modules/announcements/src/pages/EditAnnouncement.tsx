@@ -19,7 +19,7 @@ import AnnouncementForm from "../components/AnnouncementForm";
 import SubmitDialog from "../components/SubmitDialog";
 
 const EditAnnouncement = () => {
-  const { t } = useTranslation("configui");
+  const { t } = useTranslation("announcements");
   const [initialData, setInitialData] = useState<any>({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { announcementId } = useParams();
@@ -67,7 +67,7 @@ const EditAnnouncement = () => {
     <Box marginX={4}>
       <Flex direction={"row"}>
         <Heading as="h4" size="md" mb="2">
-          Edit Announcement
+          {t("EDIT_ANNOUNCEMENT")}
         </Heading>
       </Flex>
       <Divider></Divider>
