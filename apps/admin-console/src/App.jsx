@@ -9,9 +9,15 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
-const ViewAnnouncements = React.lazy(() => import("announcements/ViewAnnouncements"));
-const CreateAnnouncement = React.lazy(() => import("announcements/CreateAnnouncement"));
-const EditAnnouncement = React.lazy(() => import("announcements/EditAnnouncement"));
+const ViewAnnouncements = React.lazy(() =>
+  import("announcements/ViewAnnouncements")
+);
+const CreateAnnouncement = React.lazy(() =>
+  import("announcements/CreateAnnouncement")
+);
+const EditAnnouncement = React.lazy(() =>
+  import("announcements/EditAnnouncement")
+);
 const RegistryPage = () => <h1>Registry Page</h1>;
 const AboutPage = () => <h1>About Page</h1>;
 
@@ -50,7 +56,6 @@ function App() {
       path: "reports",
       component: AboutPage,
     },
-
   ];
 
   const navLinks = [

@@ -30,16 +30,10 @@
                   "default_announcement_types": {
                     "title": "Available announcement types",
                     "type": "array",
-                    "default": [
-                      "event",
-                      "general"
-                    ],
+                    "default": ["event", "general"],
                     "items": {
                       "type": "string",
-                      "enum": [
-                        "event",
-                        "general"
-                      ]
+                      "enum": ["event", "general"]
                     },
                     "uniqueItems": true
                   }
@@ -52,18 +46,10 @@
                   "available_filters": {
                     "title": "Available filters",
                     "type": "array",
-                    "default": [
-                      "dateModified",
-                      "author",
-                      "type"
-                    ],
+                    "default": ["dateModified", "author", "type"],
                     "items": {
                       "type": "string",
-                      "enum": [
-                        "dateModified",
-                        "author",
-                        "type"
-                      ],
+                      "enum": ["dateModified", "author", "type"],
                       "enumNames": [
                         "Date Modified",
                         "Author",
