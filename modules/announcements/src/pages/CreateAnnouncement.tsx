@@ -1,113 +1,45 @@
 import { useTranslation } from "react-i18next";
-import { Button } from "@chakra-ui/button";
-import {
-  Box,
-  Flex,
-  Heading,
-  Icon,
-  Link,
-  Spacer,
-  Input,
-  FormLabel,
-  Select,
-  VStack,
-  HStack,
-  FormControl,
-  Switch,
-  Textarea,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, useDisclosure } from "@chakra-ui/react";
 
-import { FaInfoCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-
-import * as _ from "lodash";
-
-import React, { useState, useEffect } from "react";
-
-import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import React, { useState, RefObject } from "react";
 import { createAnnouncement } from "../services/AnnouncementService";
+import AnnouncementForm from "../components/AnnouncementForm";
+import SubmitDialog from "../components/SubmitDialog";
 
 const CreateAnnouncement = () => {
   const { t } = useTranslation("configui");
-  const [data, setData] = useState();
-  const [isPinned, setIsPinned] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
-  const onSubmit = (data: any) => {
-    setData(data);
-    createAnnouncement(data);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const cancelRef = React.useRef() as RefObject<any>;
+
+  const onFormSubmit = (values: any) => {
+    onOpen();
+    createAnnouncement(values)
+      .then((res: any) => {
+        console.log("Created announcement");
+      })
+      .catch((err: any) => {
+        alert(err.message);
+      })
+      .finally(() => navigate(`/announcements`));
   };
 
   return (
     <Box marginX={4}>
       <Flex direction={"row"}>
-        <Heading as="h4" size="md">
+        <Heading as="h4" size="md" mb="2">
           Create Announcement
         </Heading>
-        <Spacer></Spacer>
       </Flex>
-      <Box>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <VStack mt="2" p="3">
-            <Input
-              mt="2"
-              placeholder="Announcement title"
-              id="title"
-              type="text"
-              {...register("title")}
-            />
+      <Divider></Divider>
+      <SubmitDialog
+        onClose={onClose}
+        isOpen={isOpen}
+        cancelRef={cancelRef}
+      ></SubmitDialog>
 
-            <Select
-              placeholder="Select announcement type"
-              {...register("announcementType")}
-            >
-              <option value="event">Event</option>
-              <option value="general">General</option>
-            </Select>
-
-            <Flex justify="space-between" width="100%">
-              <FormControl>
-                <FormLabel>Pinned announcement</FormLabel>
-                <Switch
-                  id="isPinned"
-                  defaultChecked={isPinned}
-                  {...register("isPinned")}
-                  onChange={(e: any) => setIsPinned(e.target.checked)}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Dismissable</FormLabel>
-                <Switch
-                  id="isDismissable"
-                  defaultChecked={false}
-                  isDisabled={!isPinned}
-                  {...register("isDismissable")}
-                />
-              </FormControl>
-            </Flex>
-            <Textarea
-              isDisabled={isPinned}
-              placeholder="Data for announcement"
-              {...register("data")}
-            />
-          </VStack>
-          <HStack my={4} spacing="2">
-            <Button variant={"outline"} color="primary.100" type="submit">
-              Save
-            </Button>
-            <NavLink to={`/allannouncements`}>
-              <Button variant={"outline"} type="button">
-                Cancel
-              </Button>
-            </NavLink>
-          </HStack>
-        </form>
-      </Box>
+      <AnnouncementForm onFormSubmit={onFormSubmit}></AnnouncementForm>
     </Box>
   );
 };

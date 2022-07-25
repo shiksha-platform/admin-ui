@@ -3,10 +3,12 @@ import qs from "qs";
 
 const baseUrl = "http://localhost:3000/api/v1/announcements/";
 
-//TO-DO: Add pagination support
-export const fetchAnnouncements = async () => {
+export const fetchAnnouncements = async (
+  pageIndex: number,
+  pageSize: number
+) => {
   return await axios
-    .get(`${baseUrl}`, {
+    .get(`${baseUrl}?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -30,8 +32,6 @@ export const fetchAnnouncement = async (id: any) => {
 
 export const createAnnouncement = async (announcementData: any) => {
   var formData = qs.stringify(announcementData);
-  console.log(formData);
-  //TO-DO: Convert [] in additionalFields to {}
   return await axios
     .post(baseUrl, formData, {
       headers: {
