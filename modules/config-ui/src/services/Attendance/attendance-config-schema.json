@@ -13,28 +13,17 @@
             "title": "",
             "type": "object",
             "properties": {
-              "Attendance": {
+              "attendance": {
                 "type": "object",
                 "title": "Attendance",
                 "properties": {
-                  "allowed_attendance_states": {
+                  "default_attendance_states": {
                     "title": "Available attendance states",
                     "type": "array",
-                    "default": ["present", "absent"],
+                    "default": ["present", "absent", "unmarked"],
                     "items": {
                       "type": "string",
-                      "enum": ["present", "absent", "late"]
-                    },
-                    "uniqueItems": true
-                  },
-                  "attendance_tags": {
-                    "title": "Attendance Tags",
-                    "type": "array",
-                    "default": ["special_duty", "gov_duty"],
-                    "items": {
-                      "type": "string",
-                      "enum": ["special_duty", "gov_duty"],
-                      "enumNames": ["Special Duty", "Goverment Duty"]
+                      "enum": ["present", "absent", "unmarked"]
                     },
                     "uniqueItems": true
                   }
@@ -44,14 +33,14 @@
                 "type": "object",
                 "title": "Details Shown in Attendance Card",
                 "properties": {
-                  "attendance_card_layout": {
+                  "visual_layout_attendance_card": {
                     "title": "Attendance layout",
                     "type": "string",
                     "default": "default",
                     "enum": ["default"],
                     "enumNames": ["Default Layout"]
                   },
-                  "sort_options": {
+                  "order_of_attendance_card": {
                     "title": "Sort Options",
                     "type": "string",
                     "default": "Alphabetically",
@@ -64,7 +53,7 @@
                 "type": "object",
                 "title": "Class Attendance",
                 "properties": {
-                  "frequency": {
+                  "frequency_time_attendance": {
                     "title": "Frequency",
                     "type": "string",
                     "default": "once_a_day",
@@ -84,7 +73,7 @@
                   "submit_by": {
                     "title": "Submit by",
                     "type": "array",
-                    "default": ["EOD"],
+                    "default": ["eod"],
                     "items": {
                       "type": "string",
                       "enum": ["eod", "9am", "12pm", "1pm", "2pm"],
@@ -92,18 +81,17 @@
                     },
                     "uniqueItems": true
                   },
-                  "previous_attendance_allowed": {
+                  "previous_attendance_edit": {
                     "title": "Enabling if editing previous attendance is allowed",
                     "type": "boolean",
                     "default": false
                   },
-                  "allow_to_mark_all_attendance_at_once": {
+                  "mark_all_attendance_at_once": {
                     "title": "Enabling if marking all students at once is allowed",
                     "type": "boolean",
                     "default": true
                   },
-
-                  "Enable_class_period_attendance": {
+                  "class_period_attendance": {
                     "title": "Enabling class period attendance",
                     "type": "boolean",
                     "default": true
@@ -124,16 +112,7 @@
               }
             }
           },
-          "uischema": {
-            "class_attendance": {
-              "previous_attendance_allowed": {
-                "ui:widget": "radio"
-              },
-              "allow_to_mark_all_attendance_at_once": {
-                "ui:widget": "radio"
-              }
-            }
-          }
+          "uischema": {}
         },
         {
           "name": "report",
@@ -169,11 +148,11 @@
             "title": "",
             "type": "object",
             "properties": {
-              "Attendance": {
+              "attendance": {
                 "type": "object",
                 "title": "Communication",
                 "properties": {
-                  "communication_channels": {
+                  "channels_of_communication": {
                     "title": "Communication Channel",
                     "type": "array",
                     "default": ["SMS", "Whatsapp"],
@@ -182,6 +161,31 @@
                       "enum": ["SMS", "Whatsapp"]
                     },
                     "uniqueItems": true
+                  },
+                  "allowed_role_to_send_attendance_notification": {
+                    "title": "Permitting roles that can send notifications",
+                    "type": "array",
+                    "default": [
+                      "state_deployer",
+                      "state_admin",
+                      "school_admin",
+                      "teacher"
+                    ],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "state_deployer",
+                        "state_admin",
+                        "school_admin",
+                        "teacher"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "see_notification_history": {
+                    "title": "Enable / Disable visibility of notification history",
+                    "type": "boolean",
+                    "default": true
                   }
                 }
               }

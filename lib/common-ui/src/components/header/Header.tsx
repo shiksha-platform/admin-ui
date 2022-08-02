@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { Flex, Box } from '@chakra-ui/react'
 
 type User = {
-  name: string
+  name: string | null
 }
 
 export interface HeaderProps {
@@ -30,7 +30,6 @@ const NavBarContainer = ({ children, ...props }: any) => {
       justify='space-between'
       wrap='wrap'
       w='100%'
-      mb={4}
       p={4}
       bg={['primary.100', 'primary.100', 'primary.100', 'primary.100']}
       color={['white', 'white', 'primary.700', 'primary.700']}
