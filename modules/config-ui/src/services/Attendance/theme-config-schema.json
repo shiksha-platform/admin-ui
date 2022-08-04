@@ -1,0 +1,36 @@
+{
+  "name": "theme",
+  "label": "Theme",
+  "subModules": [
+    {
+      "name": "theme",
+      "label": "theme",
+      "sections": [
+        {
+          "name": "",
+          "label": "Theme",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "theme": {
+                "type": "object",
+                "title": "Theme",
+                "properties": {
+                  "forModules": {
+                    "title": "Select the theme for all the module",
+                    "type": "string",
+                    "default": "joyFull",
+                    "enum": ["joyFull", "monochrome"],
+                    "enumNames": ["Joy-Full", "Monochrome"],
+                    "uniqueItems": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

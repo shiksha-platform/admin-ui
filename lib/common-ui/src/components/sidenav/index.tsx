@@ -1,4 +1,4 @@
-import { Box, Divider, Flex } from '@chakra-ui/react'
+import { Box, Divider, Flex, ListItem, List, HStack } from '@chakra-ui/react'
 import React, { Suspense, useState } from 'react'
 import { Fragment } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
@@ -25,32 +25,34 @@ const NavMenuItem = ({ path, label, icon, children }: NavMenuItemProps) => {
   }
   if (children) {
     return (
-      <li style={{ marginTop: '40px', marginBottom: '40px' }}>
-        <Flex direction={'row'} onClick={toggle}>
-          {icon && <Icon as={icon} />}
-          <Box px='2'>
+      <ListItem py='2'>
+        <HStack
+          onClick={toggle}
+          alignItems='center'
+          justifyContent={'space-between'}
+        >
+          <HStack spacing={2} alignItems='center'>
+            {icon && <Icon as={icon} />}
             <NavLink to='#'>{label}</NavLink>
-          </Box>
+          </HStack>
           {!isOpen && <Icon as={FaAngleRight} />}
           {isOpen && <Icon as={FaAngleDown} />}
-        </Flex>
+        </HStack>
         {isOpen && (
-          <Box px='2'>
+          <Box px='3'>
             <NavMenuList navLinks={children}></NavMenuList>
           </Box>
         )}
-      </li>
+      </ListItem>
     )
   } else
     return (
-      <li style={{ marginTop: '10px', marginBottom: '10px' }}>
-        <Flex direction={'row'}>
+      <ListItem py='2'>
+        <HStack onClick={toggle} alignItems='center' spacing={2}>
           {icon && <Icon as={icon} />}
-          <Box px='2'>
-            <NavLink to={path}>{label}</NavLink>
-          </Box>
-        </Flex>
-      </li>
+          <NavLink to={path}>{label}</NavLink>
+        </HStack>
+      </ListItem>
     )
 }
 const NavMenuList = ({
@@ -61,11 +63,11 @@ const NavMenuList = ({
   level?: number
 }) => {
   return (
-    <ul style={{ listStyle: 'none', padding: '4px' }}>
+    <List spacing={1}>
       {navLinks.map((item: NavMenuItemProps, index: number) => (
         <NavMenuItem key={index} {...item}></NavMenuItem>
       ))}
-    </ul>
+    </List>
   )
 }
 export const SideNav = ({ routes, navLinks }: any) => {
@@ -73,8 +75,6 @@ export const SideNav = ({ routes, navLinks }: any) => {
     <Fragment>
       <Suspense fallback='loading...'>
         <Router>
-          {/* Router component can have only 1 child. We'll use a simple
-          div element for this example. */}
           <Flex direction={'row'} bg={'white'}>
             <Box p={'20px'} width='250px' height='auto'>
               <NavMenuList navLinks={navLinks}></NavMenuList>

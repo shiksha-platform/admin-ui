@@ -1,0 +1,258 @@
+{
+  "name": "assessment",
+  "label": "Assessment",
+  "subModules": [
+    {
+      "name": "assessment",
+      "label": "assessment",
+      "sections": [
+        {
+          "name": "",
+          "label": "Spot Assessment",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "spot-assessment": {
+                "type": "object",
+                "title": "Spot Assessment",
+                "properties": {
+                  "questionFilterForSpotAssessment": {
+                    "title": "Can choose which filters are applicable for questions in a spot assessment",
+                    "type": "array",
+                    "default": ["subject"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["subject", "competency"],
+                      "enumNames": ["Subject", "Competency"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "questionSource": {
+                    "title": "Choose source of questions for conducting spot assessments",
+                    "type": "array",
+                    "default": ["diksha"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["diksha", "khan-academy", "google-read-along"],
+                      "enumNames": [
+                        "Diksha",
+                        "Khan Academy",
+                        "Google Read Along"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "questionMetadata": {
+                    "title": "Select types of spot assessments to be enabled",
+                    "type": "array",
+                    "default": ["written", "oral"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["written", "oral"],
+                      "enumNames": ["Written", "Oral"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "limitOfNumberOfQuestions": {
+                    "title": "Set the limit of number of questions for spot assessments",
+                    "type": "array",
+                    "default": [5],
+                    "items": {
+                      "type": "number",
+                      "enum": [5, 6, 7, 8, 9, 10],
+                      "enumNames": [5, 6, 7, 8, 9, 10]
+                    },
+                    "uniqueItems": true
+                  },
+                  "dataPoints": {
+                    "title": "Select data to be included in the spot assessment report",
+                    "type": "array",
+                    "default": [
+                      "overall-class-participation",
+                      "100%-achievers",
+                      "student-wise-assesment"
+                    ],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "overall-class-participation",
+                        "100%-achievers",
+                        "student-wise-assesment"
+                      ],
+                      "enumNames": [
+                        "Overall Class Participation",
+                        "100% Achievers",
+                        "Student-wise Assesment"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "allowDownloadAssessmentReport": {
+                    "title": "Allow download of spot assessment report",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "allowSharingAssessmentReport": {
+                    "title": "Allow sharing of spot assessment report",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "allowSendingNotificationOfAssessment": {
+                    "title": "Allow sending notifications to students regarding spot assessments",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "channelNotificationSpotAssessmentList": {
+                    "title": "Select channels through which notifications can be sent for spot assessments",
+                    "type": "array",
+                    "default": ["sms", "whatsApp", "telegram"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["sms", "whatsApp", "telegram"],
+                      "enumNames": ["SMS", "WhatsApp", "Telegram"]
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "state-assessment",
+          "label": "State Assessment",
+          "schema": {
+            "title": "",
+            "type": "object",
+            "properties": {
+              "state-assessment": {
+                "type": "object",
+                "title": "State Assessment",
+                "properties": {
+                  "stateAssessmentsGradeSubject": {
+                    "title": "Select Grade-Subject for state assessment",
+                    "type": "array",
+                    "default": ["question-wise", "number-10"],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "question-wise",
+                        "number-10",
+                        "practical-theory-wise",
+                        "learning-outcome-wise"
+                      ],
+                      "enumNames": [
+                        "Question-wise",
+                        "Number - 10",
+                        "Practical & Theory-wise",
+                        "Learning Outcome-wise"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "typeOfDataEntryFor1-3": {
+                    "title": "Select a type of data entry required for state assessment 1 - 3",
+                    "type": "array",
+                    "default": ["question-wise", "number-10"],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "question-wise",
+                        "number-10",
+                        "practical-theory-wise",
+                        "learning-outcome-wise"
+                      ],
+                      "enumNames": [
+                        "Question-wise",
+                        "Number - 10",
+                        "Practical & Theory-wise",
+                        "Learning Outcome-wise"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "typeOfDataEntryFor8-11": {
+                    "title": "Select a type of data entry required for state assessment 8 - 11",
+                    "type": "array",
+                    "default": ["class1-maths", "class1-english"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["class1-maths", "class1-english"],
+                      "enumNames": ["Class1-Maths", "Class1-English"]
+                    },
+                    "uniqueItems": true
+                  },
+                  "rangeOfStateAssessmentMarks-11": {
+                    "title": "Select a range of state assessment marks",
+                    "type": "array",
+                    "default": ["marks-range-1to5", "grades-range-AtoD"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["marks-range-1to5", "grades-range-AtoD"],
+                      "enumNames": [
+                        "Marks, Range - 1 to 5",
+                        "Grades, Range - A to D"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "includedStateAssessmentReportData": {
+                    "title": "Select data to be included in the state assessment report",
+                    "type": "array",
+                    "default": [
+                      "overall-class-participation",
+                      "100%-achievers",
+                      "student-wise-assesment"
+                    ],
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "overall-class-participation",
+                        "100%-achievers",
+                        "student-wise-assesment"
+                      ],
+                      "enumNames": [
+                        "Overall Class Participation",
+                        "100% Achievers",
+                        "Student-wise Assesment"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "eventNotificationShouldBeSend": {
+                    "title": "Select the events basis which notifications should be sent",
+                    "type": "array",
+                    "default": ["50"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["50", "85", "100"],
+                      "enumNames": [
+                        "Students with <50% marks in state assessment",
+                        "Students with >85% marks in state assessment",
+                        "Students who were absent in state assessment"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "channelNotificationStateAssessmentList": {
+                    "title": "Select channels through which notifications can be sent for state assessments",
+                    "type": "array",
+                    "default": ["sms", "whatsApp", "telegram"],
+                    "items": {
+                      "type": "string",
+                      "enum": ["sms", "whatsApp", "telegram"],
+                      "enumNames": ["SMS", "WhatsApp", "Telegram"]
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            }
+          },
+          "uischema": {}
+        }
+      ]
+    }
+  ]
+}

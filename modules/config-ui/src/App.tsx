@@ -2,9 +2,15 @@ import "./App.css";
 
 import "common-ui/dist/index.css";
 
-import { AppShell, initializeI18n, LoginPage } from "common-ui";
+import {
+  AppShell,
+  initializeI18n,
+  LoginPage,
+  RouteProps,
+  NavMenuItemProps,
+  AppShellProps,
+} from "common-ui";
 import ConfigEditorPage from "./pages/config-view/ConfigEditorPage";
-import { RouteProps, NavMenuItemProps, AppShellProps } from "common-ui";
 
 type User = {
   name: string;
@@ -52,7 +58,12 @@ function App() {
   };
   return (
     <article>
-      <AppShell {...appShellProp}></AppShell>
+      <AppShell
+        label=""
+        routes={routes}
+        navLinks={navLinks}
+        AuthComponent={LoginPage}
+      ></AppShell>
     </article>
   );
 }

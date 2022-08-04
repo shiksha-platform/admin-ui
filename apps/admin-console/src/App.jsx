@@ -3,9 +3,8 @@ import "./App.css";
 import "common-ui/dist/index.css";
 import { AppShell, initializeI18n, LoginPage } from "common-ui";
 import React from "react";
-import { FaBook, FaHome, FaCogs } from "react-icons/fa";
+import { FaBook, FaHome, FaCogs, FaUserCog } from "react-icons/fa";
 import { BiBarChartSquare } from "react-icons/bi";
-import { ChakraProvider } from "@chakra-ui/react";
 
 const HomePage = () => <h1>Home Page</h1>;
 const ConfigPage = React.lazy(() => import("configui/ConfigEditorPage"));
@@ -44,6 +43,21 @@ function App() {
       icon: FaHome,
     },
     {
+      path: "/general",
+      label: "General",
+      icon: FaUserCog,
+      children: [
+        {
+          path: "/config/theme",
+          label: "Theme",
+        },
+        {
+          path: "/config/roles",
+          label: "Roles",
+        },
+      ],
+    },
+    {
       path: "/registry",
       label: "Registry",
       icon: FaBook,
@@ -71,6 +85,10 @@ function App() {
           path: "/config/worksheet",
           label: "Worksheet",
         },
+        {
+          path: "/config/assessment",
+          label: "Assessment",
+        },
       ],
     },
     {
@@ -92,9 +110,3 @@ function App() {
 }
 
 export default App;
-
-/*
-<article>
-      <AppShell label="" routes={routes} navLinks={navLinks}></AppShell>
-    </article>
-*/
