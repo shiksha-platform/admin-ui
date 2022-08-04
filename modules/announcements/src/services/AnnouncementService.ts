@@ -8,7 +8,8 @@ export const fetchAnnouncements = async (
   pageSize: number
 ) => {
   return await axios
-    .get(`${baseUrl}?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
+    .get(baseUrl, {
+      params: { pageIndex, pageSize },
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
