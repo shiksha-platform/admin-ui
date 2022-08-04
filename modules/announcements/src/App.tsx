@@ -25,10 +25,6 @@ initializeI18n([], `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`);
 function App() {
   const routes: RouteProps[] = [
     {
-      path: "/",
-      component: ViewAnnouncements,
-    },
-    {
       path: "/announcements/create",
       component: CreateAnnouncement,
     },
