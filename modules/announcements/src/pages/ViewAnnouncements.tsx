@@ -29,6 +29,7 @@ import {
   Th,
   Tooltip,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -52,7 +53,28 @@ const ViewAnnouncements = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-
+  const toast = useToast();
+  //handle announcement deletion
+  const onDeleteAnnouncement = (val: any, index: number) => {
+    deleteAnnouncement(val.announcementId)
+      .then(() => {
+        toast({
+          title: t("ANNOUNCEMENT_DELETE_SUCCESS"),
+          status: "success",
+          position: "bottom",
+        });
+        setAnnouncementsData(
+          announcementsData.filter((val: any, idx: number) => idx !== index)
+        );
+      })
+      .catch((err) => {
+        toast({
+          title: `${t("ANNOUNCEMENT_DELETE_ERROR")}:${err.message}`,
+          status: "error",
+          position: "bottom",
+        });
+      });
+  };
   //pagination click handler
   const navigateToPage = (pI: number) => {
     //set the current index and initiate skeleton loader
@@ -184,15 +206,9 @@ const ViewAnnouncements = () => {
                                     <Button
                                       colorScheme="red"
                                       size="sm"
-                                      onClick={() => {
-                                        deleteAnnouncement(val.announcementId);
-                                        setAnnouncementsData(
-                                          announcementsData.filter(
-                                            (val: any, idx: number) =>
-                                              idx !== index
-                                          )
-                                        );
-                                      }}
+                                      onClick={() =>
+                                        onDeleteAnnouncement(val, index)
+                                      }
                                     >
                                       {t("DELETE")}
                                     </Button>

@@ -6,6 +6,7 @@ import {
   Heading,
   Spinner,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import * as _ from "lodash";
@@ -26,6 +27,7 @@ const EditAnnouncement = () => {
   const navigate = useNavigate();
   const cancelRef = React.useRef() as RefObject<any>;
   const location = useLocation();
+  const toast = useToast();
 
   const setUpdatedData = (formData: any) => {
     formData["dateModified"] = new Date().toISOString();
@@ -37,10 +39,18 @@ const EditAnnouncement = () => {
     onOpen();
     updateAnnouncement(setUpdatedData(values))
       .then((res: any) => {
-        console.log("Updated data");
+        toast({
+          title: t("ANNOUNCEMENT_EDIT_SUCCESS"),
+          status: "success",
+          position: "bottom",
+        });
       })
       .catch((err: any) => {
-        alert(err.message);
+        toast({
+          title: `${t("ANNOUNCEMENT_EDIT_ERROR")}:${err.message}`,
+          status: "error",
+          position: "bottom",
+        });
       })
       .finally(() => navigate(`/announcements`));
   };

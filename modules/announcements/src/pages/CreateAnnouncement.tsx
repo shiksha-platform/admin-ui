@@ -1,5 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { Box, Divider, Flex, Heading, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 
 import { useNavigate } from "react-router-dom";
 import React, { useState, RefObject } from "react";
@@ -12,15 +19,23 @@ const CreateAnnouncement = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const cancelRef = React.useRef() as RefObject<any>;
-
+  const toast = useToast();
   const onFormSubmit = (values: any) => {
     onOpen();
     createAnnouncement(values)
       .then((res: any) => {
-        console.log("Created announcement");
+        toast({
+          title: t("ANNOUNCEMENT_CREATE_SUCCESS"),
+          status: "success",
+          position: "bottom",
+        });
       })
       .catch((err: any) => {
-        alert(err.message);
+        toast({
+          title: `${t("ANNOUNCEMENT_CREATE_ERROR")}:${err.message}`,
+          status: "error",
+          position: "bottom",
+        });
       })
       .finally(() => navigate(`/announcements`));
   };
@@ -39,7 +54,10 @@ const CreateAnnouncement = () => {
         cancelRef={cancelRef}
       ></SubmitDialog>
 
-      <AnnouncementForm onFormSubmit={onFormSubmit}></AnnouncementForm>
+      <AnnouncementForm
+        initialData={{}}
+        onFormSubmit={onFormSubmit}
+      ></AnnouncementForm>
     </Box>
   );
 };

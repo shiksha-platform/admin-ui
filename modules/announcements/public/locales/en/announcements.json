@@ -24,5 +24,11 @@
   "AUTHOR": "Author",
   "CREATE_ANNOUNCEMENT": "Create Announcement",
   "SUBMITTING_FORM": "Submitting Form",
-  "ADDITIONAL_TAG_PLACEHOLDER": "type additional tag and hit 'Enter' key"
+  "ADDITIONAL_TAG_PLACEHOLDER": "type additional tag and hit 'Enter' key",
+  "ANNOUNCEMENT_EDIT_SUCCESS": "Announcement updated successfully",
+  "ANNOUNCEMENT_EDIT_ERROR": "Error updating announcement",
+  "ANNOUNCEMENT_CREATE_SUCCESS": "Announcement created successfully",
+  "ANNOUNCEMENT_CREATE_ERROR": "Error creating announcement",
+  "ANNOUNCEMENT_DELETE_SUCCESS": "Announcement deleted successfully",
+  "ANNOUNCEMENT_DELETE_ERROR": "Error deleting announcement"
 }

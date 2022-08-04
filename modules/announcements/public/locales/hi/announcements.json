@@ -24,5 +24,11 @@
   "AUTHOR": "घोषनाकारी",
   "CREATE_ANNOUNCEMENT": "घोषणा बनाएँ",
   "SUBMITTING_FORM": "फॉर्म सबमिट किया जा रहा है",
-  "ADDITIONAL_TAG_PLACEHOLDER": "अतिरिक्त टैग टाइप करें और 'एंटर' कुंजी दबाएं"
+  "ADDITIONAL_TAG_PLACEHOLDER": "अतिरिक्त टैग टाइप करें और 'एंटर' कुंजी दबाएं",
+  "ANNOUNCEMENT_EDIT_SUCCESS": "घोषणा सफलतापूर्वक अद्यतन की गई",
+  "ANNOUNCEMENT_EDIT_ERROR": "घोषणा अद्यतन करने में त्रुटि",
+  "ANNOUNCEMENT_CREATE_SUCCESS": "घोषणा सफलतापूर्वक बनाई गई",
+  "ANNOUNCEMENT_CREATE_ERROR": "घोषणा बनाने में त्रुटि",
+  "ANNOUNCEMENT_DELETE_SUCCESS": "घोषणा सफलतापूर्वक हटाई गई",
+  "ANNOUNCEMENT_DELETE_ERROR": "घोषणा हटाने में त्रुटि"
 }
