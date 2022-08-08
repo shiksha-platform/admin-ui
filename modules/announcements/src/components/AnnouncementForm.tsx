@@ -15,6 +15,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
+//@ts-ignore
 import { Field, Form, Formik } from "formik";
 import { NavLink } from "react-router-dom";
 
@@ -52,14 +53,14 @@ const AnnouncementForm: React.FC<any> = ({
     <Formik
       enableReinitialize
       initialValues={{ ...convertToDTO(initialData), additionalTagsInput: "" }}
-      onSubmit={(values, actions) => {
+      onSubmit={(values:any, actions:any) => {
         actions.setSubmitting(false);
         onFormSubmit(convertToDTO(values));
       }}
     >
-      {(props) => (
+      {(props:any) => (
         <Form
-          onKeyDown={(e) => {
+          onKeyDown={(e:any) => {
             if (e.code === "Enter" || e.code === "NumpadEnter")
               e.preventDefault();
           }}
