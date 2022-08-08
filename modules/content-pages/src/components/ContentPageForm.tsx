@@ -51,6 +51,9 @@ const ContentPageForm: React.FC<any> = ({
           "ui:placeholder": "Block type",
         },
         blockData: {
+          "ui:options": {
+            label: false
+          },
           imgSrc: {
             "ui:widget": "imb",
           },
@@ -65,6 +68,11 @@ const ContentPageForm: React.FC<any> = ({
     rtb: RichtextBlock,
     imb: ImageBlock,
   };
+  const onSubmit=({formData}:any,e:any)=>{
+    if(!formData['urlSlug'])
+      formData['urlSlug']=slugify(formData?.title);
+    formSubmitHandler(formData);
+  }
   return (
     <Form
       onChange={(e: any) => {
@@ -75,6 +83,7 @@ const ContentPageForm: React.FC<any> = ({
       schema={contentPageForm as any}
       uiSchema={ui}
       widgets={widgets}
+      onSubmit={onSubmit}
     ></Form>
   );
 };

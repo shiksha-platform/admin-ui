@@ -34,7 +34,7 @@ const contentPageForm = {
                   },
                   blockData: {
                     type: "object",
-                    title: false,
+                    title: "",
                     properties: {
                       collapsibleHeader: {
                         title: "Heading",
@@ -55,7 +55,7 @@ const contentPageForm = {
                   },
                   blockData: {
                     type:"object",
-                    title: false,
+                    title: "",
                     properties:{
                       richtextData:{
                         title: "Richtext",
@@ -72,7 +72,7 @@ const contentPageForm = {
                   },
                   blockData: {
                     type: "object",
-                    title: false,
+                    title: "",
                     properties: {
                       imgSrc: {
                         title: "Source",
