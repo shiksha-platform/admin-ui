@@ -10,6 +10,7 @@ import {
   NavMenuItemProps,
 } from "common-ui";
 import EditContentPage from "./pages/EditContentPage";
+import CreateContentPage from "./pages/CreateContentPage";
 
 type User = {
   name: string;
@@ -29,6 +30,10 @@ function App() {
     {
       path: "/content-pages/edit",
       component: EditContentPage,
+    },
+    {
+      path: "/content-pages/create",
+      component: CreateContentPage,
     }
   ];
   let navLinks: NavMenuItemProps[] = [];

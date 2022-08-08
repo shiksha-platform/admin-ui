@@ -48,15 +48,18 @@ const id = {
 const EditContentPage = () => {
   const { t } = useTranslation("configui");
   const [initialData, setInitialData] = useState<any>({});
+  const {slug}=useParams();
+
   const formSubmitHandler = (formData: any) => {
     console.log(formData);
     formData["status"] = "published";
     formData["contentPageId"] = 1;
     updateContentPage(formData).then((res: any) => console.log(res));
   };
+  
   const initialiseData = () => {
     //console.log(slug);
-    fetchContentPageData("sample-content-page-for-testing").then((res: any) =>{
+    fetchContentPageData(slug).then((res: any) =>{
       console.log(res);
       delete res['dateModified'];
       delete res['contentPageId'];
