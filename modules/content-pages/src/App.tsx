@@ -9,6 +9,7 @@ import {
   LoginPage,
   NavMenuItemProps,
 } from "common-ui";
+import EditContentPage from "./pages/EditContentPage";
 
 type User = {
   name: string;
@@ -25,6 +26,10 @@ function App() {
       label: "About",
       component: AboutPage,
     },
+    {
+      path: "/content-pages/edit",
+      component: EditContentPage,
+    }
   ];
   let navLinks: NavMenuItemProps[] = [];
   const appShellProp: AppShellProps = {

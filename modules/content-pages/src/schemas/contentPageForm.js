@@ -1,8 +1,8 @@
 const contentPageForm = {
   type: "object",
-  required: ["pageTitle", "urlSlug"],
+  required: ["title"],
   properties: {
-    pageTitle: {
+    title: {
       title: "Title",
       type: "string",
     },
@@ -19,8 +19,9 @@ const contentPageForm = {
           blockType: {
             title: "Block type",
             type: "string",
-            enum: ["Richtext", "Image", "Collapsible"],
-            default: "Richtext",
+            enum: ["richtext", "image", "collapsible"],
+            enumNames: ["Richtext", "Image", "Collapsible"],
+            default: "richtext",
           },
         },
         dependencies: {
@@ -29,42 +30,60 @@ const contentPageForm = {
               {
                 properties: {
                   blockType: {
-                    enum: ["Collapsible"],
+                    enum: ["collapsible"],
                   },
-                  collapsibleHeader: {
-                    title: "Heading",
-                    type: "string",
-                  },
-                  collapsibleContent: {
-                    title: "Content",
-                    type: "string",
-                  },
-                },
-              },
-              {
-                properties: {
-                  blockType: {
-                    enum: ["Richtext"],
-                  },
-                  richtextholder: {
-                    title: "Richtext",
-                    type: "string",
+                  blockData: {
+                    type: "object",
+                    title: false,
+                    properties: {
+                      collapsibleHeader: {
+                        title: "Heading",
+                        type: "string",
+                      },
+                      collapsibleContent: {
+                        title: "Content",
+                        type: "string",
+                      },
+                    },
                   },
                 },
               },
               {
                 properties: {
                   blockType: {
-                    enum: ["Image"],
+                    enum: ["richtext"],
                   },
-                  imgSrc: {
-                    title: "Source",
-                    type: "string",
-                    format: "uri",
+                  blockData: {
+                    type:"object",
+                    title: false,
+                    properties:{
+                      richtextData:{
+                        title: "Richtext",
+                        type: "string",
+                      }
+                    }
                   },
-                  imageCaption: {
-                    title: "Image Caption",
-                    type: "string",
+                },
+              },
+              {
+                properties: {
+                  blockType: {
+                    enum: ["image"],
+                  },
+                  blockData: {
+                    type: "object",
+                    title: false,
+                    properties: {
+                      imgSrc: {
+                        title: "Source",
+                        type: "string",
+                        format: "uri",
+                      },
+                      imageCaption: {
+                        title: "Image Caption",
+                        type: "string",
+                      },
+                    },
                   },
                 },
               },

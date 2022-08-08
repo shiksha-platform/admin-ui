@@ -5,12 +5,12 @@ import React from "react";
 import { FaUpload } from "react-icons/fa";
 
 const ImageBlock: React.FC<any> = (props: any) => {
-  const [imgFile, setImgFile] = React.useState("");
+  const [imgFile, setImgFile] = React.useState(props?.value);
   const handleChange = (e: any) => {
     if (e.target.files.length > 0) {
       setImgFile(URL.createObjectURL(e.target.files[0]));
       //To-do: add aws support
-      props.onChange("https://picsum.photos/200/300");
+      props.onChange("https://i.picsum.photos/id/1018/300/200.jpg?hmac=7zbk4w0X7mlStuBLB7ZOuCyvzKkZkcOOvpE353yHcwE");
       console.log(e.target.files[0]);
     }
   };
