@@ -18,7 +18,7 @@ const CreateContentPage = () => {
   const formSubmitHandler = (formData: any) => {
     console.log(formData);
     formData["status"] = "published";
-    formData["contentPageId"] = 1;
+    formData["author"] = "principal";
     createContentPage(formData).then((res: any) => console.log(res));
   };
   return (
