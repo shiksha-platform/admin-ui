@@ -81,6 +81,10 @@
                     },
                     "uniqueItems": true
                   },
+                  "submit_by1": {
+                    "title": "Submit by 1",
+                    "type": "string"
+                  },
                   "previous_attendance_edit": {
                     "title": "Enabling if editing previous attendance is allowed",
                     "type": "boolean",
@@ -112,7 +116,13 @@
               }
             }
           },
-          "uischema": {}
+          "uischema": {
+            "class_attendance": {
+              "submit_by1": {
+                "ui:widget": "time"
+              }
+            }
+          }
         },
         {
           "name": "report",
