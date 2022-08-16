@@ -53,7 +53,7 @@ const EditContentPage = () => {
   const formSubmitHandler = (formData: any) => {
     console.log(formData);
     formData["contentPageId"] = initialData?.contentPageId;
-    updateContentPage(formData).then((res: any) => console.log(res));
+    updateContentPage(formData,initialData?.contentPageId).then((res: any) => console.log(res));
   };
   
   const initialiseData = () => {

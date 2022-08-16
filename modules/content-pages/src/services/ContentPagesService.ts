@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-const baseUrl = "http://localhost:3000/api/v1/contentPages/";
+const baseUrl = "http://localhost:3000/api/v1/contentPages";
 
 export const createContentPage = async (contentPageData: any) => {
   var formData = qs.stringify(contentPageData);
@@ -19,7 +19,7 @@ export const createContentPage = async (contentPageData: any) => {
 
 export const fetchContentPageData = async (slug: any) => {
   return await axios
-    .get(`${baseUrl}${slug}`, {
+    .get(`${baseUrl}/${slug}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -29,9 +29,21 @@ export const fetchContentPageData = async (slug: any) => {
     });
 };
 
-export const updateContentPage = async (contentPageData: any) => {
+export const fetchContentPages = async (limit:number,offset:number) => {
   return await axios
-    .put(`${baseUrl}1`, {
+    .get(`${baseUrl}?limit=${limit}&offset=${offset}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const updateContentPage = async (contentPageData: any,contentPageId:number) => {
+  return await axios
+    .put(`${baseUrl}/${contentPageId}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -42,3 +54,14 @@ export const updateContentPage = async (contentPageData: any) => {
     });
 };
 
+export const deleteContentPage = async (pageId:string) => {
+  return await axios
+    .delete(`${baseUrl}/${pageId}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((res) => {
+      return res.data.data[0];
+    });
+};

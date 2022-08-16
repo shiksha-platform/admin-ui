@@ -11,6 +11,7 @@ import {
 } from "common-ui";
 import EditContentPage from "./pages/EditContentPage";
 import CreateContentPage from "./pages/CreateContentPage";
+import ViewContentPages from "./pages/ViewContentPages";
 
 type User = {
   name: string;
@@ -30,6 +31,10 @@ function App() {
     {
       path: "/content-pages/edit/:slug",
       component: EditContentPage,
+    },
+    {
+      path: "/",
+      component: ViewContentPages,
     },
     {
       path: "/content-pages/create",

@@ -4,6 +4,9 @@ module.exports = {
   name: "content_pages",
   exposes: {
     "./App": "./src/App",
+    "./EditContentPage": "./src/pages/EditContentPage",
+    "./CreateContentPage": "./src/pages/CreateContentPage",
+    "./ViewContentPages": "./src/pages/ViewContentPages",
   },
   remotes: {},
   filename: "moduleEntry.js",
