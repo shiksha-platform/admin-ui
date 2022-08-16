@@ -10,6 +10,14 @@ const contentPageForm = {
       title: "URL Slug",
       type: "string",
     },
+    author: {
+      title: "Author",
+      type: "string",
+    },
+    status: {
+      title: "Status",
+      type: "string",
+    },
     blocks: {
       title: "Configure blocks",
       type: "array",
