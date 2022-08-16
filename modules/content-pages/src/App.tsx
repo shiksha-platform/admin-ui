@@ -28,7 +28,7 @@ function App() {
       component: AboutPage,
     },
     {
-      path: "/content-pages/edit",
+      path: "/content-pages/edit/:slug",
       component: EditContentPage,
     },
     {

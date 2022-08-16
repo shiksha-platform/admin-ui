@@ -1,42 +1,65 @@
 import "../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import * as _ from "lodash";
-import { Flex, Icon, IconButton, VStack, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  IconButton,
+  VStack,
+  Text,
+  Button,
+  useToast
+} from "@chakra-ui/react";
 import React from "react";
 import { FaUpload } from "react-icons/fa";
+import { validateImage } from "../../services/utils/FileValidationUtils";
 
 const ImageBlock: React.FC<any> = (props: any) => {
-  const [imgFile, setImgFile] = React.useState(props?.value);
+  const toast=useToast();
+  const [imgFile, setImgFile] = React.useState();
+  const [imgFileUrl, setImgFileUrl] = React.useState(props?.value);
+  const [showUploadButton, setsetShowUploadButton] = React.useState(false);
+  const [isUploading, setIsuploading] = React.useState(false);
+  console.log(props);
+  
   const handleChange = (e: any) => {
     if (e.target.files.length > 0) {
-      setImgFile(URL.createObjectURL(e.target.files[0]));
-      //To-do: add aws support
-      props.onChange("https://i.picsum.photos/id/1018/300/200.jpg?hmac=7zbk4w0X7mlStuBLB7ZOuCyvzKkZkcOOvpE353yHcwE");
-      console.log(e.target.files[0]);
+      const fileError=validateImage(e.target.files[0])
+      if (fileError!=="no_error") {
+        toast({
+          title: `Error`,
+          description: fileError,
+          position: "bottom",
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        })
+        return;
+      }
+      setsetShowUploadButton(true);
+      setImgFile(e.target.files[0]);
+      setImgFileUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
   return (
-    <div className="img" style={{ width: "100%", cursor: "pointer" }}>
-      <div
-        style={{
-          pointerEvents: "none",
-          width: "100%",
-          opacity: 1,
-        }}
-      >
-        <Flex justifyContent="center" width="100%" height={"400px"}>
-          {!_.isEmpty(imgFile) ? (
-            <img src={imgFile} />
-          ) : (
-            <VStack spacing="1">
-              <IconButton
-                aria-label="Upload image"
-                icon={<Icon as={FaUpload} />}
-              />
-              <Text>Upload Image</Text>
-            </VStack>
-          )}
-        </Flex>
-      </div>
+    <VStack
+      className="img"
+      width="100%"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Flex width="100%" maxHeight={"400px"} justifyContent="center">
+        {!_.isEmpty(imgFileUrl) ? (
+          <img src={imgFileUrl} />
+        ) : (
+          <VStack spacing="1">
+            <IconButton
+              aria-label="Select image"
+              icon={<Icon as={FaUpload} />}
+            />
+            <Text>Upload Image</Text>
+          </VStack>
+        )}
+      </Flex>
       <input
         style={{
           opacity: 0,
@@ -50,7 +73,46 @@ const ImageBlock: React.FC<any> = (props: any) => {
         accept=".jpeg,.png,image/png,image/jpeg"
         onChange={(e) => handleChange(e)}
       />
-    </div>
+      {showUploadButton ? (
+        <Button
+          isLoading={isUploading}
+          loadingText="Uploading"
+          aria-label="Upload"
+          leftIcon={<Icon as={FaUpload} />}
+          onClick={() => {
+            setIsuploading(true);
+            props?.options.fileUploader?.uploadFile(imgFile)
+              .then(
+                (res: any) => {
+                  URL.revokeObjectURL(imgFileUrl);
+                  setImgFileUrl(res);
+                  console.log(res);
+                  setsetShowUploadButton(false);
+                  props.onChange(res);
+                  toast({
+                    title: `Image uploaded successfully`,
+                    position: "bottom",
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                  })
+                }
+              )
+              .catch((err: any) => toast({
+                title: `Error uploading image`,
+                description: `${err}`,
+                position: "bottom",
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+              }))
+              .finally(() => setIsuploading(false));
+          }}
+        >
+          Upload
+        </Button>
+      ) : null}
+    </VStack>
   );
 };
 export default ImageBlock;

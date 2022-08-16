@@ -53,7 +53,7 @@ const EditContentPage = () => {
   const formSubmitHandler = (formData: any) => {
     console.log(formData);
     formData["status"] = "published";
-    formData["contentPageId"] = 1;
+    formData["contentPageId"] = initialData?.contentPageId;
     updateContentPage(formData).then((res: any) => console.log(res));
   };
   
