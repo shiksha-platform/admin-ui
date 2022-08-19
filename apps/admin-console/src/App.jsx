@@ -107,13 +107,12 @@ function App() {
           label: "Worksheet",
         },
         {
-<<<<<<< HEAD
           path: "/config/assessment",
           label: "Assessment",
-=======
+        },
+        {
           path: "/config/announcements",
           label: "Announcements",
->>>>>>> 1cf553d (Integrated announcement config with admin console)
         },
       ],
     },
