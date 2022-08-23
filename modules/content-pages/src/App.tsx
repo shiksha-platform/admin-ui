@@ -39,7 +39,7 @@ function App() {
     {
       path: "/content-pages/create",
       component: CreateContentPage,
-    }
+    },
   ];
   let navLinks: NavMenuItemProps[] = [];
   const appShellProp: AppShellProps = {

@@ -5,66 +5,56 @@ import {
   Flex,
   Heading,
   Spinner,
-  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import * as _ from "lodash";
-import React, { useState, useEffect, RefObject } from "react";
+import React, { useState, useEffect } from "react";
 import ContentPageForm from "../components/ContentPageForm";
 import {
   fetchContentPageData,
   updateContentPage,
 } from "../services/ContentPagesService";
 
-const id = {
-  blocks: [
-    {
-      blockType: "image",
-      blockData: {
-        imgSrc:
-          "https://i.picsum.photos/id/1018/300/200.jpg?hmac=7zbk4w0X7mlStuBLB7ZOuCyvzKkZkcOOvpE353yHcwE",
-        imageCaption: "Sample image of hill",
-      },
-    },
-    {
-      blockType: "collapsible",
-      blockData: {
-        collapsibleHeader: "Collapsible heading",
-        collapsibleContent: "Collapsible content",
-      },
-    },
-    {
-      blockType: "richtext",
-      blockData: {
-        richtextData:
-          '{"blocks":[{"key":"9dni5","text":"Richtext block for testing purposes","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":19,"style":"BOLD"}],"entityRanges":[],"data":{}}],"entityMap":{}}',
-      },
-    },
-  ],
-  title: "Sample content page for testing",
-  urlSlug: "sample-content-page-for-testing",
-};
-
 const EditContentPage = () => {
-  const { t } = useTranslation("configui");
+  const { t } = useTranslation("contentPages");
+  const toast = useToast();
+  const navigate = useNavigate();
+
   const [initialData, setInitialData] = useState<any>({});
-  const {slug}=useParams();
+  const { slug } = useParams();
 
   const formSubmitHandler = (formData: any) => {
     console.log(formData);
     formData["contentPageId"] = initialData?.contentPageId;
-    updateContentPage(formData,initialData?.contentPageId).then((res: any) => console.log(res));
+    updateContentPage(formData, initialData?.contentPageId)
+      .then((res: any) => {
+        toast({
+          title: t("CONTENT_PAGE_EDIT_SUCCESS"),
+          position: "bottom",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((err: any) =>
+        toast({
+          title: t("CONTENT_PAGE_EDIT_ERROR"),
+          position: "bottom",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        })
+      )
+      .finally(() => navigate(`/`));
   };
-  
+
   const initialiseData = () => {
-    //console.log(slug);
-    fetchContentPageData(slug).then((res: any) =>{
-      console.log(res);
-      delete res['dateModified'];
-      delete res['contentPageId'];
+    fetchContentPageData(slug).then((res: any) => {
+      delete res["dateModified"];
+      delete res["contentPageId"];
       setInitialData(res);
-    }
-    );
+    });
   };
   useEffect(() => initialiseData(), []);
   return (

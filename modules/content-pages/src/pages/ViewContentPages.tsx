@@ -29,6 +29,7 @@ import {
   Th,
   Tooltip,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 
 import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -36,18 +37,43 @@ import * as _ from "lodash";
 
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { deleteContentPage, fetchContentPages } from "../services/ContentPagesService";
+import {
+  deleteContentPage,
+  fetchContentPages,
+} from "../services/ContentPagesService";
 
 const PAGE_SIZE = 3;
 
 const ViewContentPages = () => {
-  const { t } = useTranslation("content-pages");
+  const { t } = useTranslation("contentPages");
+  const toast = useToast();
   const [contentPagesData, setContentPagesData] = useState<any>();
   const [pageIndex, setPageIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+
+  const onDeleteContentPage = (val: any, index: number) => {
+    deleteContentPage(val.contentPageId)
+      .then(() => {
+        toast({
+          title: t("CONTENT_PAGE_DELETE_SUCCESS"),
+          status: "success",
+          position: "bottom",
+        });
+        setContentPagesData(
+          contentPagesData.filter((val: any, idx: number) => idx !== index)
+        );
+      })
+      .catch((err: any) => {
+        toast({
+          title: `${t("CONTENT_PAGE_DELETE_ERROR")}:${err.message}`,
+          status: "error",
+          position: "bottom",
+        });
+      });
+  };
 
   //pagination click handler
   const navigateToPage = (pI: number) => {
@@ -57,10 +83,9 @@ const ViewContentPages = () => {
     setErrMsg("");
 
     //fetch announcements from backend
-    fetchContentPages(PAGE_SIZE,pI * PAGE_SIZE).then(
+    fetchContentPages(PAGE_SIZE, pI * PAGE_SIZE).then(
       (res: any) => {
         setContentPagesData(res.data.data);
-        console.log(res);
         setTotalPages(res.data.count);
         setIsLoading(false);
       },
@@ -80,14 +105,14 @@ const ViewContentPages = () => {
     <Box marginX={4}>
       <Flex direction={"row"} mb="2">
         <Heading as="h4" size="md">
-          {t("ALL_CONTENT_PAGESS")}
+          {t("ALL_CONTENT_PAGES")}
         </Heading>
       </Flex>
       <Divider></Divider>
       <Flex width="100%" justifyContent={"flex-end"}>
         <NavLink to={`create`}>
           <Button size="sm" mt="5" mb="3" colorScheme="green">
-            {t("CREATE_NEW")}
+            {t("CREATE_CONTENT_PAGE")}
           </Button>
         </NavLink>
       </Flex>
@@ -113,9 +138,7 @@ const ViewContentPages = () => {
                           overflow={"hidden"}
                           cursor="pointer"
                           onClick={() =>
-                            navigate(
-                              `/content-pages/edit/${val.urlSlug}`
-                            )
+                            navigate(`/content-pages/edit/${val.urlSlug}`)
                           }
                         >
                           {val.title}
@@ -147,9 +170,7 @@ const ViewContentPages = () => {
                                 aria-label="Edit content page"
                                 variant="ghost"
                                 onClick={() =>
-                                  navigate(
-                                    `/content-pages/edit/${val.urlSlug}`,
-                                  )
+                                  navigate(`/content-pages/edit/${val.urlSlug}`)
                                 }
                               />
                             </Tooltip>
@@ -175,15 +196,9 @@ const ViewContentPages = () => {
                                     <Button
                                       colorScheme="red"
                                       size="sm"
-                                      onClick={() => {
-                                        deleteContentPage(val.contentPageId);
-                                        setContentPagesData(
-                                          contentPagesData.filter(
-                                            (val: any, idx: number) =>
-                                              idx !== index
-                                          )
-                                        );
-                                      }}
+                                      onClick={() =>
+                                        onDeleteContentPage(val, index)
+                                      }
                                     >
                                       {t("DELETE")}
                                     </Button>

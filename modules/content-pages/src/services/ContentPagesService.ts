@@ -29,7 +29,7 @@ export const fetchContentPageData = async (slug: any) => {
     });
 };
 
-export const fetchContentPages = async (limit:number,offset:number) => {
+export const fetchContentPages = async (limit: number, offset: number) => {
   return await axios
     .get(`${baseUrl}?limit=${limit}&offset=${offset}`, {
       headers: {
@@ -41,7 +41,10 @@ export const fetchContentPages = async (limit:number,offset:number) => {
     });
 };
 
-export const updateContentPage = async (contentPageData: any,contentPageId:number) => {
+export const updateContentPage = async (
+  contentPageData: any,
+  contentPageId: number
+) => {
   return await axios
     .put(`${baseUrl}/${contentPageId}`, {
       headers: {
@@ -54,7 +57,7 @@ export const updateContentPage = async (contentPageData: any,contentPageId:numbe
     });
 };
 
-export const deleteContentPage = async (pageId:string) => {
+export const deleteContentPage = async (pageId: string) => {
   return await axios
     .delete(`${baseUrl}/${pageId}`, {
       headers: {

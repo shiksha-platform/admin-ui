@@ -17,6 +17,9 @@ const contentPageForm = {
     status: {
       title: "Status",
       type: "string",
+      enum: ["published", "draft"],
+      enumNames: ["Published", "Draft"],
+      default: "published",
     },
     blocks: {
       title: "Configure blocks",
@@ -62,14 +65,14 @@ const contentPageForm = {
                     enum: ["richtext"],
                   },
                   blockData: {
-                    type:"object",
+                    type: "object",
                     title: "",
-                    properties:{
-                      richtextData:{
+                    properties: {
+                      richtextData: {
                         title: "Richtext",
                         type: "string",
-                      }
-                    }
+                      },
+                    },
                   },
                 },
               },

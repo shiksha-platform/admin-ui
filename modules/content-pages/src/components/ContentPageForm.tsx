@@ -41,7 +41,7 @@ const ContentPageForm: React.FC<any> = ({
 }: any) => {
   const { t } = useTranslation("configui");
   const [formData, setFormData] = React.useState<any>(initialData);
-  const azureFileUploadService=new AzureFileUploadService();
+  const azureFileUploadService = new AzureFileUploadService();
 
   const ui = {
     urlSlug: {
@@ -55,14 +55,14 @@ const ContentPageForm: React.FC<any> = ({
         },
         blockData: {
           "ui:options": {
-            label: false
+            label: false,
           },
           imgSrc: {
             "ui:widget": "imb",
           },
           richtextData: {
-            "ui:widget":"rtb",
-          }
+            "ui:widget": "rtb",
+          },
         },
       },
     },
@@ -71,16 +71,15 @@ const ContentPageForm: React.FC<any> = ({
     rtb: RichtextBlock,
     imb: ImageBlock,
   };
-  ImageBlock.defaultProps={
-    options:{
-      fileUploader: azureFileUploadService
-    }
-  }
-  const onSubmit=({formData}:any,e:any)=>{
-    if(!formData['urlSlug'])
-      formData['urlSlug']=slugify(formData?.title);
+  ImageBlock.defaultProps = {
+    options: {
+      fileUploader: azureFileUploadService,
+    },
+  };
+  const onSubmit = ({ formData }: any, e: any) => {
+    if (!formData["urlSlug"]) formData["urlSlug"] = slugify(formData?.title);
     formSubmitHandler(formData);
-  }
+  };
   return (
     <Form
       onChange={(e: any) => {

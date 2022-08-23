@@ -1,25 +1,29 @@
 import { useTranslation } from "react-i18next";
-import {
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  Spinner,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Box, Divider, Flex, Heading, useToast } from "@chakra-ui/react";
 import * as _ from "lodash";
-import React, { useState, useEffect, RefObject } from "react";
+import React from "react";
 import ContentPageForm from "../components/ContentPageForm";
 import { createContentPage } from "../services/ContentPagesService";
 
 const CreateContentPage = () => {
-  const { t } = useTranslation("configui");
+  const { t } = useTranslation("contentPages");
+  const toast = useToast();
   const formSubmitHandler = (formData: any) => {
-    console.log(formData);
-    formData["status"] = "published";
-    formData["author"] = "principal";
-    createContentPage(formData).then((res: any) => console.log(res));
+    createContentPage(formData)
+      .then((res: any) => {
+        toast({
+          title: t("CONTENT_PAGE_CREATE_SUCCESS"),
+          status: "success",
+          position: "bottom",
+        });
+      })
+      .catch((err: any) => {
+        toast({
+          title: `${t("CONTENT_PAGE_CREATE_ERROR")}:${err.message}`,
+          status: "error",
+          position: "bottom",
+        });
+      });
   };
   return (
     <Box marginX={4}>
