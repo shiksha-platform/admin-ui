@@ -89,6 +89,18 @@ function App() {
           path: "/config/assessment",
           label: "Assessment",
         },
+        {
+          path: "/config/myprofile",
+          label: "My Profile",
+        },
+        {
+          path: "/config/myschool",
+          label: "My Schools",
+        },
+        {
+          path: "/config/myvisits",
+          label: "My Visits",
+        },
       ],
     },
     {
