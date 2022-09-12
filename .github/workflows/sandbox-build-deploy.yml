@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/sandbox-admin.shikshaplatform.io/public
+            cd /var/www/admin.shikshaplatform.io/public
             rm -rf *
             cp ../shiksha-admin-ui.tar ./
             tar -xvf shiksha-admin-ui.tar .
