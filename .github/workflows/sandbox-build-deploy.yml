@@ -27,7 +27,7 @@ jobs:
       - name: Copy Package
         run: |
           sh ./scripts/pack-prod-build.sh
-          rsync shiksha-admin-ui.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/sandbox-admin.shikshaplatform.io/shiksha-admin-ui.tar
+          rsync shiksha-admin-ui.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/admin.shikshaplatform.io/shiksha-admin-ui.tar
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
