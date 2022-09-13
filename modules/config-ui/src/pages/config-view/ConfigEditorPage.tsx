@@ -223,7 +223,7 @@ const ConfigEditor = ({ moduleId }: any) => {
     <Box marginX={4}>
       <Flex direction={"row"}>
         <Heading as="h4" size="md">
-          {config.label} <Icon as={FaInfoCircle} />
+          {config.label}
         </Heading>
         <Spacer></Spacer>
       </Flex>
