@@ -83,7 +83,7 @@ export const LoginPage = () => {
         console.log(result)
         let token = result.data.access_token
         const userInfoResponse = await fetchUserInfo(
-          'https://shiksha-prod.shikshaplatform.io/auth/auth/realms/sunbird-rc/protocol/openid-connect/userinfo',
+          'https://shiksha-prod.shikshaplatform.io/auth/realms/sunbird-rc/protocol/openid-connect/userinfo',
           token
         )
         console.log(userInfoResponse)
