@@ -14,6 +14,3 @@ done
 cp -r  apps/admin-console/build/* prod-build/
 find  prod-build -name  'modules.json' | xargs sed -i 's|http://localhost:[0-9]*||g'
 cd prod-build && tar -cf ../shiksha-admin-ui.tar . && cd ../
-          
-          
-
