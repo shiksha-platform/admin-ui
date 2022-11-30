@@ -30,6 +30,7 @@ import {
   fetchConfigSchema,
   saveConfigData,
 } from "../../services/ConfigService";
+import TimePickerWidget from "../../components/rjsf-widgets/TimePickerWidget";
 
 const ObjectFieldTemplate = (props: any) => {
   return (
@@ -219,6 +220,10 @@ const ConfigEditor = ({ moduleId }: any) => {
     return;
   };
 
+  const widgets = {
+    time: TimePickerWidget,
+  };
+
   return (
     <Box marginX={4}>
       <Flex direction={"row"}>
@@ -270,6 +275,7 @@ const ConfigEditor = ({ moduleId }: any) => {
                       ref={(form) => {
                         configForms.push(form);
                       }}
+                      widgets={widgets}
                       onSubmit={onSubmit}
                       schema={section.schema}
                       uiSchema={section.uischema}
