@@ -1,7 +1,7 @@
 import axios from "axios";
 import attendanceConfigSchema from "../services/Attendance/attendance-config-schema.json";
 
-const baseUrl = "https://sandbox.shikshaplatform.io/api/v1";
+const baseUrl = "https://sandbox.shiksha.samagra.io/api/v1";
 const fetchConfigApiUrl = baseUrl + "/config/{module}/all";
 const saveConfigApiUrl = baseUrl + "/config/{multipleConfigs}";
 
