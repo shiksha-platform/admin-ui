@@ -1,0 +1,90 @@
+{
+  "name": "content-pages",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "modules/content-pages",
+  "dependencies": {
+    "@azure/arm-storage": "^17.2.0",
+    "@azure/identity": "^2.0.4",
+    "@azure/storage-blob": "^12.9.0",
+    "@chakra-ui/icons": "^2.0.0",
+    "@chakra-ui/react": "^2.0.0",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@rjsf/chakra-ui": "^4.2.0",
+    "@rjsf/core": "^4.2.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/draft-js":"^0.11.7",
+    "@types/react-draft-wysiwyg": "^1.15.0",
+    "chakra-react-select": "^3.3.6",
+    "common-ui": "^0.0.0",
+    "draft-js": "^0.11.7",
+    "framer-motion": "^6",
+    "i18next": "^21.6.14",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-draft-wysiwyg": "^1.15.0",
+    "react-i18next": "^11.16.9",
+    "react-icons": "^4.3.1",
+    "react-query": "^3.39.1",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "devDependencies": {
+    "@craco/craco": "^6.4.3",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/builder-webpack5": "^6.4.22",
+    "@storybook/manager-webpack5": "^6.4.22",
+    "@storybook/node-logger": "^6.4.22",
+    "@storybook/preset-create-react-app": "^4.1.0",
+    "@storybook/react": "^6.4.22",
+    "@storybook/testing-library": "^0.0.11",
+    "craco-module-federation": "^1.1.0",
+    "external-remotes-plugin": "^1.0.0",
+    "prettier": "^2.5.1",
+    "webpack": "^5.69.1"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
